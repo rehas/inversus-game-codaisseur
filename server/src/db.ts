@@ -33,7 +33,7 @@ export default () =>
       Player,
       Game
     ],
-    synchronize: true, // careful with this in production!
+    synchronize: false, // careful with this in production!
     logging: true,
     namingStrategy: new CustomNamingStrategy()
   })
