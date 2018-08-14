@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react'
 import {connect} from 'react-redux'
 import {Redirect} from 'react-router-dom'
-import {getGames, joinGame, updateGame} from '../../actions/games'
+import {getGames, joinGame, updateGame, syncGame} from '../../actions/games'
 import {getUsers} from '../../actions/users'
 import {userId} from '../../jwt'
 import Paper from 'material-ui/Paper'
@@ -14,6 +14,7 @@ class GameDetails extends PureComponent {
     if (this.props.authenticated) {
       if (this.props.game === null) this.props.getGames()
       if (this.props.users === null) this.props.getUsers()
+      
     }
   }
 
@@ -40,6 +41,7 @@ class GameDetails extends PureComponent {
 
 
   render() {
+    this.props.syncGame()
     const {game, users, authenticated, userId} = this.props
 
     if (!authenticated) return (
@@ -95,7 +97,7 @@ const mapStateToProps = (state, props) => ({
 })
 
 const mapDispatchToProps = {
-  getGames, getUsers, joinGame, updateGame
+  getGames, getUsers, joinGame, updateGame, syncGame
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameDetails)
