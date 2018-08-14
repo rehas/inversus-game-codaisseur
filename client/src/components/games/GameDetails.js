@@ -5,7 +5,7 @@ import {getGames, joinGame, updateGame, syncGame} from '../../actions/games'
 import {getUsers} from '../../actions/users'
 import {userId} from '../../jwt'
 import Paper from 'material-ui/Paper'
-import Board from './Board'
+import Board from './board/Board'
 import './GameDetails.css'
 
 class GameDetails extends PureComponent {
@@ -52,7 +52,7 @@ class GameDetails extends PureComponent {
     if (!game) return 'Not found'
 
     const player = game.players.find(p => p.userId === userId)
-
+    const playerCoordinates = `Player${player.player}_coordinates`
     const winner = game.players
       .filter(p => p.symbol === game.winner)
       .map(p => p.userId)[0]
@@ -64,8 +64,8 @@ class GameDetails extends PureComponent {
 
       {
         game.status === 'started' &&
-        player && player.symbol === game.turn &&
-        <div>It's your turn!</div>
+        player &&
+        <div>You're Player {player.player}!</div>
       }
 
       {
@@ -83,7 +83,7 @@ class GameDetails extends PureComponent {
 
       {
         game.status !== 'pending' &&
-        <Board board={game.board} />
+        <Board board={game.board} playerNumber={player.player} currentPlayerCoordinates={game[playerCoordinates]}/>
       }
     </Paper>)
   }
