@@ -11,7 +11,7 @@ import {Server} from 'http'
 import * as IO from 'socket.io'
 import * as socketIoJwtAuth from 'socketio-jwt-auth'
 import {secret} from './jwt'
-import { Player, Game } from './games/entities';
+import { Game } from './games/entities';
 
 const app = new Koa()
 const server = new Server(app.callback())
