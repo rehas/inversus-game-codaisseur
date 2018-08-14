@@ -1,5 +1,4 @@
 import React, {PureComponent} from 'react'
-import './LoginForm.css'
 
 export default class LoginForm extends PureComponent {
 	state = {}
@@ -19,24 +18,23 @@ export default class LoginForm extends PureComponent {
 
 	render() {
 		return (
-      <div className="login-form">
-  			<form onSubmit={this.handleSubmit}>
-  				<label>
-            Email
-            <input type="email" name="email" value={
-  						this.state.email || ''
-  					} onChange={ this.handleChange } />
-          </label>
+			<form onSubmit={this.handleSubmit}>
+				<div>
+					<label htmlFor="email">Email</label>
+					<input type="email" name="email" id="email" value={
+						this.state.email || ''
+					} onChange={ this.handleChange } />
+				</div>
 
-  				<label>
-            Password
-            <input type="password" name="password" value={
-  						this.state.password || ''
-  					} onChange={ this.handleChange } />
-          </label>
+				<div>
+					<label htmlFor="password">Password</label>
+					<input type="password" name="password" id="password" value={
+						this.state.password || ''
+					} onChange={ this.handleChange } />
+				</div>
 
-  				<button type="submit">Login</button>
-  			</form>
-		  </div>)
+				<button type="submit">Login</button>
+			</form>
+		)
 	}
 }
