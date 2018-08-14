@@ -8,15 +8,14 @@ const socket = io.connect('http://localhost:4000')
 
 export const SYNC_GAME = 'SYNC_GAME'
 
-export const syncGame = () => (dispatch) =>{
-  socket.on('syncGame', data => {
-    console.log("Game Synced")
-    return dispatch({
+export const syncGame = data => {
+    console.log("game synced")
+    return {
       type: SYNC_GAME,
-      payload : data.latest
-    })
-  })
+      payload : data.gameUpdate
+    }
 }
+
 
 
 

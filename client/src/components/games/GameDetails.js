@@ -41,7 +41,7 @@ class GameDetails extends PureComponent {
 
 
   render() {
-    this.props.syncGame()
+    // this.props.syncGame()
     const {game, users, authenticated, userId} = this.props
 
     if (!authenticated) return (
