@@ -38,7 +38,7 @@ export default () =>
     namingStrategy: new CustomNamingStrategy(),
     migrations: ["migration/*.js"],
     cli: {
-      "migrationsDir": "migration"
+      migrationsDir: "migration"
     }
   })
     .then(_ => console.log('Connected to Postgres with TypeORM'))
