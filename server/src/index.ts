@@ -69,23 +69,24 @@ io.on('connect',  async socket => {
   let gameId = 0;
   let game: {} | undefined
 
-  setInterval(async function(){
-    console.log("Gane id", gameId)
+  const syncer = setInterval(async function(){
+    console.log("Game id", gameId)
     if (gameId === 0){
       console.log("finding game")
       gameId = parseInt( socket.request.headers.referer.slice(-1))
+      console.log('gameId', gameId)
       game = await Game.findOneById(gameId)
       // console.log(game)
     }
     // console.log(socket.request.headers.referer.slice(-1));
     // console.log("emitted sync", socket.request.user)
-    // console.log(game)
+    console.log(game)
     socket.emit('syncGame', {name:'hello', gameUpdate: game})
-  }, 500)
+  }, 100)
 
   socket.on('disconnect', () => {
     console.log(`User ${name} just disconnected`)
-    clearInterval()
+    clearInterval(syncer)
   })
 
 })

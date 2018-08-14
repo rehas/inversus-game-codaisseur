@@ -21,14 +21,4 @@ export default class SocketIO {
     console.log('Disconnecting websocket')
     this.socket.disconnect()
   }
-
-  sync= () => (dispatch) =>{
-    this.socket.on('syncGame', data => {
-      console.log("Game Synced")
-      return dispatch({
-        type: 'SYNC_GAME',
-        payload : data.latest
-      })
-    })
-  }
 }

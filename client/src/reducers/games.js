@@ -21,10 +21,15 @@ export default (state = null, {type, payload}) => {
         ...state,
         [payload.id]: payload
       }
+    
     case SYNC_GAME:
-      return {
-        ...state,
-        [payload.id]: payload
+      if (payload){
+        return {
+          ...state,
+          [payload.id]: payload
+        }
+      }else{
+        return state
       }
 
     case UPDATE_GAMES:

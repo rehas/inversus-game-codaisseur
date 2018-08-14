@@ -3,7 +3,7 @@ import {
   Body, Patch 
 } from 'routing-controllers'
 import User from '../users/entity'
-import { Game, Player, Board } from './entities'
+import { Game, Player, Board, XYCoordinates } from './entities'
 import {IsBoard, isValidTransition, calculateWinner, finished} from './logic'
 import { Validate } from 'class-validator'
 import {io} from '../index'
@@ -14,6 +14,8 @@ class GameUpdate {
     message: 'Not a valid board'
   })
   board: Board
+  Player1_Coordinates: XYCoordinates
+  Player2_Coordinates: XYCoordinates
 }
 
 @JsonController()
@@ -101,6 +103,8 @@ export default class GameController {
       game.status = 'finished'
     }
     game.board = update.board
+    if(game.Player1_coordinates) game.Player1_coordinates = update.Player1_Coordinates
+    if(game.Player2_coordinates) game.Player2_coordinates = update.Player2_Coordinates
     await game.save()
     
     io.emit('action', {
