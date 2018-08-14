@@ -3,6 +3,23 @@ import {baseUrl} from '../constants'
 import {logout} from './users'
 import {isExpired} from '../jwt'
 
+const io = require('socket.io-client')
+const socket = io.connect('http://localhost:4000')
+
+export const SYNC_GAME = 'SYNC_GAME'
+
+export const syncGame = () => (dispatch) =>{
+  socket.on('syncGame', data => {
+    console.log("Game Synced")
+    return dispatch({
+      type: SYNC_GAME,
+      payload : data.latest
+    })
+  })
+}
+
+
+
 export const ADD_GAME = 'ADD_GAME'
 export const UPDATE_GAME = 'UPDATE_GAME'
 export const UPDATE_GAMES = 'UPDATE_GAMES'

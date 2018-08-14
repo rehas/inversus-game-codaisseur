@@ -10,10 +10,28 @@ export default class SocketIO {
       query: `auth_token=${jwt}`
     });
     this.socket.on('action', payload => dispatch(payload))
+    this.socket.on('syncGame', data=>{
+      console.log("Game Synced")
+      console.log(data)
+      return dispatch({
+        type: 'SYNC_GAME',
+        payload : data
+      })
+    })
   }
 
   disconnect() {
     console.log('Disconnecting websocket')
     this.socket.disconnect()
+  }
+
+  sync= () => (dispatch) =>{
+    this.socket.on('syncGame', data => {
+      console.log("Game Synced")
+      return dispatch({
+        type: 'SYNC_GAME',
+        payload : data.latest
+      })
+    })
   }
 }
