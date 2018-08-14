@@ -80,7 +80,7 @@ io.on('connect',  async socket => {
     // console.log(socket.request.headers.referer.slice(-1));
     // console.log("emitted sync", socket.request.user)
     // console.log(game)
-    socket.broadcast.emit('syncGame', {name:'hello', gameUpdate: game})
+    socket.emit('syncGame', {name:'hello', gameUpdate: game})
   }, 500)
 
   socket.on('disconnect', () => {
