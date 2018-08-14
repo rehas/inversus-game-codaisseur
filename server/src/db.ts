@@ -35,6 +35,10 @@ export default () =>
     ],
     synchronize: false, // careful with this in production!
     logging: true,
-    namingStrategy: new CustomNamingStrategy()
+    namingStrategy: new CustomNamingStrategy(),
+    migrations: ["migration/*.js"],
+    cli: {
+      "migrationsDir": "migration"
+    }
   })
     .then(_ => console.log('Connected to Postgres with TypeORM'))
