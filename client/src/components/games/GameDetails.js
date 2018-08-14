@@ -20,16 +20,22 @@ class GameDetails extends PureComponent {
 
   joinGame = () => this.props.joinGame(this.props.game.id)
 
-  makeMove = (toRow, toCell) => {
-    const {game, updateGame} = this.props
-
-    const board = game.board.map(
-      (row, rowIndex) => row.map((cell, cellIndex) => {
-        if (rowIndex === toRow && cellIndex === toCell) return game.turn
-        else return cell
-      })
-    )
-    updateGame(game.id, board)
+  onKeyPressed = (key) => {
+    console.log(key)
+    switch (key) {
+      case 'ArrowLeft':
+        console.log("left")
+        break;
+      case 'ArrowUp':
+        console.log("up")
+        break;
+      case 'ArrowRight':
+        console.log("right")
+        break;
+      case 'ArrowDown':
+        console.log("down")
+        break;
+    }
   }
 
 
@@ -51,7 +57,7 @@ class GameDetails extends PureComponent {
       .filter(p => p.symbol === game.winner)
       .map(p => p.userId)[0]
 
-    return (<Paper className="outer-paper">
+    return (<Paper className="outer-paper" onKeyDown={(e) => this.onKeyPressed(e.key)} tabIndex="0">
       <h1>Game #{game.id}</h1>
 
       <p>Status: {game.status}</p>
@@ -77,7 +83,7 @@ class GameDetails extends PureComponent {
 
       {
         game.status !== 'pending' &&
-        <Board board={game.board} makeMove={this.makeMove} />
+        <Board board={game.board} />
       }
     </Paper>)
   }

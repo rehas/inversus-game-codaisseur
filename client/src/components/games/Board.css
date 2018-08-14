@@ -1,4 +1,19 @@
+.board {
+  box-sizing: border-box;
+  border: 2px solid #000000;
+  width: 788px;
+  height: 494px;
+  margin: auto;
+}
+.board-row {
+  margin: 0 0 -5px 0;
+
+}
 .board-tile {
+  box-sizing: border-box;
+  display: inline-block;
+  margin: 0 -1px 0 0;
   height: 50px;
   width: 50px;
+  border: 1px solid #000000;
 }
