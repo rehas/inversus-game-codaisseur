@@ -8,6 +8,10 @@ export type Board = [ Row, Row, Row, Row, Row, Row, Row, Row, Row, Row]
 export type XCoordinate = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15
 export type YCoordinate = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 export type XYCoordinates = { X: XCoordinate,  Y: YCoordinate }
+export type Direction = 'up' | 'left' | 'down '| 'right'
+export type BeamCell = {coordinate: XYCoordinates, direction: Direction}
+export type Beam = null |  BeamCell
+
 
 type Status = 'pending' | 'started' | 'finished'
 
@@ -38,10 +42,10 @@ export class Game extends BaseEntity {
   coordinates_p2: XYCoordinates
 
   @Column('json', {default: null, nullable: true})
-  beam_p1: String
+  beam_p1: Beam
 
   @Column('json', {default: null, nullable: true})
-  beam_p2: {}
+  beam_p2: Beam
 
   // this is a relation, read more about them here:
   // http://typeorm.io/#/many-to-one-one-to-many-relations

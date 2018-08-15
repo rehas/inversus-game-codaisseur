@@ -24,6 +24,7 @@ class GameDetails extends PureComponent {
     const currentPlayerCoordinates = game[`coordinates_p${player.player}`]
     let updatedPlayerCoordinates = {...currentPlayerCoordinates}
     const p_num = `p${player.player}`
+    console.log(key)
     switch (key) {
       case 'ArrowLeft':
         updatedPlayerCoordinates.X = currentPlayerCoordinates.X -1
@@ -44,6 +45,18 @@ class GameDetails extends PureComponent {
         updatedPlayerCoordinates.Y = currentPlayerCoordinates.Y +1
         updatedPlayerCoordinates.Y > 9 ? updatedPlayerCoordinates.Y = 0 : updatedPlayerCoordinates.Y
         this.props.updatePosition(p_num, updatedPlayerCoordinates, game.id)
+        break;
+      case 'w':
+        this.props.updatePosition(p_num, updatedPlayerCoordinates, game.id, 'up')
+        break;
+      case 'a':
+        this.props.updatePosition(p_num, updatedPlayerCoordinates, game.id, 'left')
+        break;
+      case 's':
+        this.props.updatePosition(p_num, updatedPlayerCoordinates, game.id, 'down')
+        break;
+      case 'd':
+        this.props.updatePosition(p_num, updatedPlayerCoordinates, game.id, 'right')
         break;
       default:
         return updatedPlayerCoordinates
