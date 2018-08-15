@@ -9,10 +9,10 @@
   margin: 0 0 -4px 0;
 
 }
-.board-tile {
+.board-cell {
   box-sizing: border-box;
   display: inline-block;
-  margin: 0 -1px -4px 0;
+  margin: 0 -1px -1px 0;
   height: 51px;
   width: 51px;
   border: 1px solid #c3c3c3;
@@ -23,19 +23,19 @@ p {
   padding: 0;
 }
 
-.board-tile-player1, .board-tile-player2 {
+.board-cell-player1, .board-cell-player2 {
   height: 100%;
   width: 100%;
 }
 
-.board-tile-player1 {
+.board-cell-player1 {
   background: url("../../assets/WhiteTeam.jpg") -21px -16px;
 }
 
-.board-tile-player2 {
+.board-cell-player2 {
   background: url("../../assets/BlackTeam.jpg") -90px -16px;
 }
 
-.board-tile-coordinates {
+.board-cell-coordinates {
   font-size: 9px;
 }
