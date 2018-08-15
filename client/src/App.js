@@ -16,7 +16,7 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <div>
+        <div id={'App'}>
           <nav>
             <TopBar />
           </nav>

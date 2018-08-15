@@ -1,21 +1,21 @@
 .board {
-  box-sizing: border-box;
+  /*box-sizing: border-box;*/
   border: 2px solid #000000;
   width: 800px;
   height: 500px;
   margin: auto;
 }
 .board-row {
-  margin: 0 0 -1px 0;
+  margin: 0 0 -4px 0;
 
 }
 .board-tile {
   box-sizing: border-box;
   display: inline-block;
-  margin: 0 -1px 0 0;
-  height: 50px;
-  width: 50px;
-  border: 1px solid #000000;
+  margin: 0 -1px -4px 0;
+  height: 51px;
+  width: 51px;
+  border: 1px solid #c3c3c3;
 }
 
 p {
@@ -26,15 +26,14 @@ p {
 .board-tile-player1, .board-tile-player2 {
   height: 100%;
   width: 100%;
-  font-size: 20px;
 }
 
 .board-tile-player1 {
-  background-color: blue;
+  background: url("../../assets/WhiteTeam.jpg") -21px -16px;
 }
 
 .board-tile-player2 {
-  background-color: green;
+  background: url("../../assets/BlackTeam.jpg") -90px -16px;
 }
 
 .board-tile-coordinates {
