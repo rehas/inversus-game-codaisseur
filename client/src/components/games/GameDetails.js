@@ -52,7 +52,6 @@ class GameDetails extends PureComponent {
     if (!game) return 'Not found'
 
     const player = game.players.find(p => p.userId === userId)
-    const playerCoordinates = `Player1_coordinates`
     const winner = game.players
       .filter(p => p.symbol === game.winner)
       .map(p => p.userId)[0]
