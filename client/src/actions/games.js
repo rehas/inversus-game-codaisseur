@@ -20,7 +20,7 @@ export const syncGame = data => {
     }
 }
 
-export const updatePosition = (player, coordinates, gameId) => (dispatch, getState) =>{
+export const updatePosition = (player, coordinates, gameId, beamDirection=null) => (dispatch, getState) =>{
   const state = getState()
   if(!state.currentUser) return null
 
