@@ -1,6 +1,6 @@
 import io from 'socket.io-client'
 import {baseUrl} from './constants'
-import {syncGame, SYNC_GAME} from './actions/games'
+import {syncGame} from './actions/games'
 
 export default class SocketIO {
   socket = null

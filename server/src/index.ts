@@ -73,7 +73,8 @@ io.on('connect',  async socket => {
     // console.log("Game id", gameId)
     if (gameId === 0 || gameId > 0){
       console.log("finding game")
-      gameId = parseInt( socket.request.headers.referer.slice(-1))
+      const li = socket.request.headers.referer.lastIndexOf('/')
+      gameId = parseInt( socket.request.headers.referer.slice(li+1))
       console.log('gameId', gameId)
       game = await Game.findOneById(gameId)
       // console.log(game)
@@ -83,7 +84,7 @@ io.on('connect',  async socket => {
     // console.log(game)
     // console.log(game.coordinates_p1, game.coordinates_p2)
     io.emit('syncGame', {gameUpdate: game})
-  }, 200)
+  }, 100)
 
   socket.on('disconnect', () => {
     console.log(`User ${name} just disconnected`)
