@@ -18,6 +18,40 @@ class GameUpdate {
   coordinates_p2: XYCoordinates
 }
 
+const checkIfShot = function(shootingPlayerCoordinates, targetPlayerCoordinates, beamDirection  ){
+  // console.log(shootingPlayerCoordinates, targetPlayerCoordinates, beamDirection)
+  switch (beamDirection) {
+    case 'left':
+      if( shootingPlayerCoordinates.Y === targetPlayerCoordinates.Y  && shootingPlayerCoordinates.X > targetPlayerCoordinates.X){
+        // console.log("someOne got shot")
+        // console.log(targetPlayerCoordinates)
+        return true
+      }else{
+        return false
+      }
+    case 'right':
+      if(shootingPlayerCoordinates.Y === targetPlayerCoordinates.Y  && shootingPlayerCoordinates.X < targetPlayerCoordinates.X){
+        return true
+      }
+      return false
+    
+    case 'up':
+      if(shootingPlayerCoordinates.X === targetPlayerCoordinates.X  && shootingPlayerCoordinates.Y > targetPlayerCoordinates.Y){
+        return true
+      }
+      return false
+
+    case 'down':
+      if(shootingPlayerCoordinates.X === targetPlayerCoordinates.X  && shootingPlayerCoordinates.Y < targetPlayerCoordinates.Y){
+        return true
+      }
+      return false
+  
+    default:
+      return false
+  }
+}
+
 
 
 @JsonController()
@@ -104,15 +138,16 @@ export default class GameController {
     else if (finished(update.board)) {
       game.status = 'finished'
     }
-    game.board = update.board
-    if(game.coordinates_p1) game.coordinates_p1 = update.coordinates_p1
-    if(game.coordinates_p2) game.coordinates_p2 = update.coordinates_p2
+    // game.board = update.board
+    // if(game.coordinates_p1) game.coordinates_p1 = update.coordinates_p1
+    // if(game.coordinates_p2) game.coordinates_p2 = update.coordinates_p2
     await game.save()
     
     io.emit('action', {
       type: 'UPDATE_GAME',
       payload: game
     })
+    io.emit('syncGame', {gameUpdate: game})
 
     return game
   }
@@ -122,20 +157,38 @@ export default class GameController {
     @Param('id') gameId : number,
     @Body() coordinatesUpdate
   ){
-    console.log(coordinatesUpdate)
-    console.log("patch request received")
+    // console.log(coordinatesUpdate)
+    // console.log("patch request received")
     const game = await Game.findOneById(gameId)
+    const shootingPlayer  = coordinatesUpdate.player
+    
     if (!game) throw new NotFoundError(`Game does not exist`)
   
-    if (coordinatesUpdate.player === 'p1'){
+    if (shootingPlayer === 'p1'){
       game.coordinates_p1 = coordinatesUpdate.coordinates
+      game.beam_p1 = coordinatesUpdate.beamDirection
+      if(checkIfShot(coordinatesUpdate.coordinates, game.coordinates_p2, coordinatesUpdate.beamDirection ))
+      {
+        game.winner = 1
+      }
     }
-    if(coordinatesUpdate.player === 'p2'){
+    if(shootingPlayer === 'p2'){
       game.coordinates_p2 = coordinatesUpdate.coordinates
+      game.beam_p2 = coordinatesUpdate.beamDirection
+      if(checkIfShot(coordinatesUpdate.coordinates, game.coordinates_p1, coordinatesUpdate.beamDirection )){
+        game.winner = 2
+      }
     }
-
     game.save()
-    io.emit('syncGame', game)
+    io.emit('syncGame', {gameUpdate: game})
+
+    if(!game.winner){
+      setTimeout(()=>{
+            shootingPlayer === 'p1' ? game.beam_p1 = null : game.beam_p2 = null;
+            game.save()
+            // io.emit('syncGame', {gameUpdate: game})
+          }, 1000)
+    }
     return game
   }
 

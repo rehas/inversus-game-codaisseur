@@ -17,20 +17,23 @@ export const syncGame = data => {
     }
 }
 
-export const updatePosition = (player, coordinates, gameId) => (dispatch, getState) =>{
+export const updatePosition = (player, coordinates, gameId, beamDirection=null) => (dispatch, getState) =>{
   const state = getState()
   if(!state.currentUser) return null
 
   const coordinatesUpdate = {
     player,
-    coordinates
+    coordinates, 
+    beamDirection
   }
 
   request
     .patch(`${baseUrl}/coordinates/${gameId}`)
     .send(coordinatesUpdate)
-    .then(result=> result)
-    .catch()
+    .then(result=> { return result
+      // dispatch(syncGame)
+    })
+    .catch(e=>console.log("you've got some error on update", e))
 }
 
 const updateGames = games => ({
