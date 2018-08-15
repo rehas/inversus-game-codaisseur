@@ -4,7 +4,6 @@ import {Redirect} from 'react-router-dom'
 import {getGames, joinGame, updateGame, syncGame, updatePosition} from '../../actions/games'
 import {getUsers} from '../../actions/users'
 import {userId} from '../../jwt'
-import Paper from 'material-ui/Paper'
 import './GameDetails.css'
 import BoardWrapper from './board/BoardWrapper'
 import Typography from '../../../node_modules/material-ui/Typography/Typography'
@@ -21,11 +20,9 @@ class GameDetails extends PureComponent {
   joinGame = () => this.props.joinGame(this.props.game.id)
 
   onKeyPressed = (key, player, game) => {
-    console.log(game)
     const currentPlayerCoordinates = game[`coordinates_p${player}`]
     let updatedPlayerCoordinates = {...currentPlayerCoordinates}
     const p_num = `p${player}`
-    console.log(key)
     switch (key) {
       case 'ArrowLeft':
         updatedPlayerCoordinates.X = currentPlayerCoordinates.X -1 < 0 ? 15 : currentPlayerCoordinates.X -1
