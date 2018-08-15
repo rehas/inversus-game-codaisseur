@@ -25,14 +25,15 @@ export const updatePosition = (player, coordinates, gameId) => (dispatch, getSta
   const state = getState()
   if(!state.currentUser) return null
 
-  const coordidinatesUpdate = {
+  const coordinatesUpdate = {
     player,
     coordinates
   }
+  console.log(coordinatesUpdate)
 
   request
-    .patch(`${baseUrl}/games/${gameId}/coordinates`)
-    .send(coordidinatesUpdate)
+    .patch(`${baseUrl}/games/${gameId}`)
+    .send(coordinatesUpdate)
     .then(result=> result)
     .catch()
 }

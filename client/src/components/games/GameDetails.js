@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react'
 import {connect} from 'react-redux'
 import {Redirect} from 'react-router-dom'
-import {getGames, joinGame, updateGame, syncGame} from '../../actions/games'
+import {getGames, joinGame, updateGame, syncGame, updatePosition} from '../../actions/games'
 import {getUsers} from '../../actions/users'
 import {userId} from '../../jwt'
 import Paper from 'material-ui/Paper'
@@ -23,6 +23,7 @@ class GameDetails extends PureComponent {
   onKeyPressed = (key, player, game) => {
     const currentPlayerCoordinates = game[`coordinates_p${player.player}`]
     let updatedPlayerCoordinates = {...currentPlayerCoordinates}
+    const p_num = `p${player.player}`
     console.log(key)
     console.log(currentPlayerCoordinates)
     switch (key) {
@@ -31,23 +32,27 @@ class GameDetails extends PureComponent {
         updatedPlayerCoordinates.X = currentPlayerCoordinates.X -1
         updatedPlayerCoordinates.X < 0 ? updatedPlayerCoordinates.X = 15 : updatedPlayerCoordinates.X
         console.log(updatedPlayerCoordinates)
+        this.props.updatePosition(p_num, updatedPlayerCoordinates, game.id)
         break;
       case 'ArrowUp':
         updatedPlayerCoordinates.Y = currentPlayerCoordinates.Y -1
         updatedPlayerCoordinates.Y < 0 ? updatedPlayerCoordinates.Y = 9 : updatedPlayerCoordinates.Y
         console.log(updatedPlayerCoordinates)
+        this.props.updatePosition(p_num, updatedPlayerCoordinates, game.id)
         break;
       case 'ArrowRight':
         console.log("right")
         updatedPlayerCoordinates.X = currentPlayerCoordinates.X +1
         updatedPlayerCoordinates.X > 15 ? updatedPlayerCoordinates.X = 0 : updatedPlayerCoordinates.X
         console.log(updatedPlayerCoordinates)
+        this.props.updatePosition(p_num, updatedPlayerCoordinates, game.id)
         break;
       case 'ArrowDown':
         console.log("down")
         updatedPlayerCoordinates.Y = currentPlayerCoordinates.Y +1
         updatedPlayerCoordinates.Y > 9 ? updatedPlayerCoordinates.Y = 0 : updatedPlayerCoordinates.Y
         console.log(updatedPlayerCoordinates)
+        this.props.updatePosition(p_num, updatedPlayerCoordinates, game.id)
         break;
     }
   }
@@ -110,7 +115,7 @@ const mapStateToProps = (state, props) => ({
 })
 
 const mapDispatchToProps = {
-  getGames, getUsers, joinGame, updateGame, syncGame
+  getGames, getUsers, joinGame, updateGame, syncGame, updatePosition
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameDetails)
