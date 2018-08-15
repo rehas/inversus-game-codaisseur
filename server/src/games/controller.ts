@@ -127,10 +127,6 @@ export default class GameController {
     const game = await Game.findOneById(gameId)
     if (!game) throw new NotFoundError(`Game does not exist`)
   
-    // cu.coordinatesUpdate {
-    //   cu.coordinatesUpdate: { player: 'p1', coordinates: { X: 5, Y: 5 } } }
-
-
     if (coordinatesUpdate.player === 'p1'){
       game.coordinates_p1 = coordinatesUpdate.coordinates
     }

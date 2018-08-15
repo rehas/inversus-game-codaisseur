@@ -24,6 +24,7 @@ export default (state = null, {type, payload}) => {
     
     case SYNC_GAME:
       if (payload){
+        console.log(payload)
         return {
           ...state,
           [payload.id]: payload
