@@ -1,5 +1,6 @@
 import io from 'socket.io-client'
 import {baseUrl} from './constants'
+import {syncGame, SYNC_GAME} from './actions/games'
 
 export default class SocketIO {
   socket = null
@@ -10,6 +11,10 @@ export default class SocketIO {
       query: `auth_token=${jwt}`
     });
     this.socket.on('action', payload => dispatch(payload))
+    this.socket.on('syncGame', data=> {
+      // console.log("SyncGame emission received")
+      return dispatch(syncGame(data))
+    })
   }
 
   disconnect() {

@@ -1,9 +1,9 @@
 import { 
   JsonController, Authorized, CurrentUser, Post, Param, BadRequestError, HttpCode, NotFoundError, ForbiddenError, Get, 
-  Body, Patch 
+  Body, Patch
 } from 'routing-controllers'
 import User from '../users/entity'
-import { Game, Player, Board } from './entities'
+import { Game, Player, Board, XYCoordinates } from './entities'
 import {IsBoard, isValidTransition, calculateWinner, finished} from './logic'
 import { Validate } from 'class-validator'
 import {io} from '../index'
@@ -14,7 +14,11 @@ class GameUpdate {
     message: 'Not a valid board'
   })
   board: Board
+  coordinates_p1: XYCoordinates
+  coordinates_p2: XYCoordinates
 }
+
+
 
 @JsonController()
 export default class GameController {
@@ -30,7 +34,7 @@ export default class GameController {
     await Player.create({
       game: entity, 
       user,
-      symbol: 'x'
+      player: 1
     }).save()
 
     const game = await Game.findOneById(entity.id)
@@ -60,7 +64,7 @@ export default class GameController {
     const player = await Player.create({
       game, 
       user,
-      symbol: 'o'
+      player: 2
     }).save()
 
     io.emit('action', {
@@ -88,8 +92,7 @@ export default class GameController {
 
     if (!player) throw new ForbiddenError(`You are not part of this game`)
     if (game.status !== 'started') throw new BadRequestError(`The game is not started yet`)
-    if (player.symbol !== game.turn) throw new BadRequestError(`It's not your turn`)
-    if (!isValidTransition(player.symbol, game.board, update.board)) {
+    if (!isValidTransition(player.player, game.board, update.board)) {
       throw new BadRequestError(`Invalid move`)
     }    
 
@@ -101,10 +104,9 @@ export default class GameController {
     else if (finished(update.board)) {
       game.status = 'finished'
     }
-    else {
-      game.turn = player.symbol === 'x' ? 'o' : 'x'
-    }
     game.board = update.board
+    if(game.coordinates_p1) game.coordinates_p1 = update.coordinates_p1
+    if(game.coordinates_p2) game.coordinates_p2 = update.coordinates_p2
     await game.save()
     
     io.emit('action', {
@@ -112,6 +114,28 @@ export default class GameController {
       payload: game
     })
 
+    return game
+  }
+
+  @Patch('/coordinates/:id([0-9]+)/')
+  async updateCoordinates(
+    @Param('id') gameId : number,
+    @Body() coordinatesUpdate
+  ){
+    console.log(coordinatesUpdate)
+    console.log("patch request received")
+    const game = await Game.findOneById(gameId)
+    if (!game) throw new NotFoundError(`Game does not exist`)
+  
+    if (coordinatesUpdate.player === 'p1'){
+      game.coordinates_p1 = coordinatesUpdate.coordinates
+    }
+    if(coordinatesUpdate.player === 'p2'){
+      game.coordinates_p2 = coordinatesUpdate.coordinates
+    }
+
+    game.save()
+    io.emit('syncGame', game)
     return game
   }
 

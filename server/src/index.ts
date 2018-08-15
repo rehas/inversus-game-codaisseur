@@ -11,6 +11,7 @@ import {Server} from 'http'
 import * as IO from 'socket.io'
 import * as socketIoJwtAuth from 'socketio-jwt-auth'
 import {secret} from './jwt'
+import { Game } from './games/entities';
 
 const app = new Koa()
 const server = new Server(app.callback())
@@ -59,13 +60,36 @@ io.use(socketIoJwtAuth.authenticate({ secret }, async (payload, done) => {
   else done(null, false, `Invalid JWT user ID`)
 }))
 
-io.on('connect', socket => {
+io.on('connect',  async socket => {
   const name = socket.request.user.firstName
+  console.log(`game id`)
+  
   console.log(`User ${name} just connected`)
+  
+  let gameId = 0;
+  let game: Game | undefined
+
+  const syncer = setInterval(async function(){
+    // console.log("Game id", gameId)
+    if (gameId === 0 || gameId > 0){
+      console.log("finding game")
+      gameId = parseInt( socket.request.headers.referer.slice(-1))
+      console.log('gameId', gameId)
+      game = await Game.findOneById(gameId)
+      // console.log(game)
+    }
+    // console.log(socket.request.headers.referer.slice(-1));
+    // console.log("emitted sync", socket.request.user)
+    // console.log(game)
+    // console.log(game.coordinates_p1, game.coordinates_p2)
+    io.emit('syncGame', {gameUpdate: game})
+  }, 200)
 
   socket.on('disconnect', () => {
     console.log(`User ${name} just disconnected`)
+    clearInterval(syncer)
   })
+
 })
 
 setupDb()

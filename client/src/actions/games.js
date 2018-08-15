@@ -3,11 +3,38 @@ import {baseUrl} from '../constants'
 import {logout} from './users'
 import {isExpired} from '../jwt'
 
+export const SYNC_GAME = 'SYNC_GAME'
 export const ADD_GAME = 'ADD_GAME'
 export const UPDATE_GAME = 'UPDATE_GAME'
 export const UPDATE_GAMES = 'UPDATE_GAMES'
 export const JOIN_GAME_SUCCESS = 'JOIN_GAME_SUCCESS'
 export const UPDATE_GAME_SUCCESS = 'UPDATE_GAME_SUCCESS'
+
+
+
+
+export const syncGame = data => {
+    return {
+      type: SYNC_GAME,
+      payload : data.gameUpdate
+    }
+}
+
+export const updatePosition = (player, coordinates, gameId) => (dispatch, getState) =>{
+  const state = getState()
+  if(!state.currentUser) return null
+
+  const coordinatesUpdate = {
+    player,
+    coordinates
+  }
+
+  request
+    .patch(`${baseUrl}/coordinates/${gameId}`)
+    .send(coordinatesUpdate)
+    .then(result=> result)
+    .catch()
+}
 
 const updateGames = games => ({
   type: UPDATE_GAMES,

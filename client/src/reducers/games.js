@@ -1,4 +1,4 @@
-import {ADD_GAME, UPDATE_GAME, UPDATE_GAMES} from '../actions/games'
+import {ADD_GAME, UPDATE_GAME, UPDATE_GAMES, SYNC_GAME} from '../actions/games'
 import {USER_LOGOUT} from '../actions/users'
 
 /*
@@ -20,6 +20,17 @@ export default (state = null, {type, payload}) => {
       return {
         ...state,
         [payload.id]: payload
+      }
+    
+    case SYNC_GAME:
+    if (payload){
+        const newState = {
+          ...state,
+        }
+        newState[payload.id] = payload
+        return newState
+      }else{
+        return state
       }
 
     case UPDATE_GAMES:
