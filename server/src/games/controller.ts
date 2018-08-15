@@ -14,8 +14,8 @@ class GameUpdate {
     message: 'Not a valid board'
   })
   board: Board
-  Player1_Coordinates: XYCoordinates
-  Player2_Coordinates: XYCoordinates
+  coordinates_p1: XYCoordinates
+  coordinates_p2: XYCoordinates
 }
 
 @JsonController()
@@ -103,8 +103,8 @@ export default class GameController {
       game.status = 'finished'
     }
     game.board = update.board
-    if(game.Player1_coordinates) game.Player1_coordinates = update.Player1_Coordinates
-    if(game.Player2_coordinates) game.Player2_coordinates = update.Player2_Coordinates
+    if(game.coordinates_p1) game.coordinates_p1 = update.coordinates_p1
+    if(game.coordinates_p2) game.coordinates_p2 = update.coordinates_p2
     await game.save()
     
     io.emit('action', {

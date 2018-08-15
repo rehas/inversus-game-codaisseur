@@ -52,7 +52,7 @@ class GameDetails extends PureComponent {
     if (!game) return 'Not found'
 
     const player = game.players.find(p => p.userId === userId)
-    const playerCoordinates = `Player${player.player}_coordinates`
+    const playerCoordinates = `Player1_coordinates`
     const winner = game.players
       .filter(p => p.symbol === game.winner)
       .map(p => p.userId)[0]
@@ -65,7 +65,7 @@ class GameDetails extends PureComponent {
       {
         game.status === 'started' &&
         player &&
-        <div>You're Player {player.player}!</div>
+        <div>You're Player {player.player}! coordinates: {game.coordinates_p1.X}</div>
       }
 
       {
@@ -76,14 +76,14 @@ class GameDetails extends PureComponent {
 
       {
         winner &&
-        <p>Winner: {users[winner].firstName}</p>
+        <p>Winner: {users[winner].firstName} </p>
       }
 
       <hr />
 
       {
         game.status !== 'pending' &&
-        <Board board={game.board} playerNumber={player.player} currentPlayerCoordinates={game[playerCoordinates]}/>
+        <Board board={game.board} playerNumber={player.player} coordinates_p1={game.coordinates_p1} coordinates_p2={game.coordinates_p2}/>
       }
     </Paper>)
   }

@@ -32,16 +32,16 @@ export class Game extends BaseEntity {
   status: Status
 
   @Column('json', {default: player1Start})
-  Player1_coordinates: XYCoordinates
+  coordinates_p1: XYCoordinates
 
   @Column('json', {default: player2Start})
-  Player2_coordinates: XYCoordinates
+  coordinates_p2: XYCoordinates
 
   @Column('json', {default: null, nullable: true})
-  Player1_beam: String
+  beam_p1: String
 
   @Column('json', {default: null, nullable: true})
-  Player2_beam: String
+  beam_p2: {}
 
   // this is a relation, read more about them here:
   // http://typeorm.io/#/many-to-one-one-to-many-relations
