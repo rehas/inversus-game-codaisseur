@@ -99,9 +99,19 @@ class GameDetails extends PureComponent {
       <hr />
 
       {
-        game.status !== 'pending' &&
-        <BoardWrapper playerNumber={player.player} coordinates_p1={game.coordinates_p1} coordinates_p2={game.coordinates_p2} onKeyPressed={this.onKeyPressed} game={game}/>
+        game.status === 'started' &&
+        <BoardWrapper
+          playerNumber={player.player}
+          coordinates_p1={game.coordinates_p1}
+          coordinates_p2={game.coordinates_p2}
+          beam_p1 = {game.beam_p1}
+          beam_p2 = {game.beam_p2}
+          onKeyPressed={this.onKeyPressed}
+          game={game}/>
       }
+
+      { game.status === 'finished' &&
+      <div> Player {game.winner} won! </div>}
     </div>)
   }
 }

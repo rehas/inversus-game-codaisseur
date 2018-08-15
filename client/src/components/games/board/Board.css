@@ -36,6 +36,13 @@ p {
   background: url("../../assets/BlackTeam.jpg") -90px -16px;
 }
 
-.board-cell-coordinates {
-  font-size: 9px;
+/*.board-cell-coordinates {*/
+/*}*/
+
+.board-cell-laser-1 {
+  background-color: red;
+}
+
+.board-cell-laser-1 {
+  background-color: blue;
 }
