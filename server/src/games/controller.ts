@@ -138,15 +138,16 @@ export default class GameController {
     else if (finished(update.board)) {
       game.status = 'finished'
     }
-    game.board = update.board
-    if(game.coordinates_p1) game.coordinates_p1 = update.coordinates_p1
-    if(game.coordinates_p2) game.coordinates_p2 = update.coordinates_p2
+    // game.board = update.board
+    // if(game.coordinates_p1) game.coordinates_p1 = update.coordinates_p1
+    // if(game.coordinates_p2) game.coordinates_p2 = update.coordinates_p2
     await game.save()
     
     io.emit('action', {
       type: 'UPDATE_GAME',
       payload: game
     })
+    io.emit('syncGame', {gameUpdate: game})
 
     return game
   }
@@ -179,7 +180,7 @@ export default class GameController {
       }
     }
     game.save()
-    // io.emit('syncGame', {gameUpdate: game})
+    io.emit('syncGame', {gameUpdate: game})
 
     if(!game.winner){
       setTimeout(()=>{
