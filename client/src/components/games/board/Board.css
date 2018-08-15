@@ -23,11 +23,18 @@ p {
   padding: 0;
 }
 
-.board-tile-player1 {
-  background-color: red;
+.board-tile-player1, .board-tile-player2 {
   height: 100%;
   width: 100%;
   font-size: 20px;
+}
+
+.board-tile-player1 {
+  background-color: blue;
+}
+
+.board-tile-player2 {
+  background-color: green;
 }
 
 .board-tile-coordinates {
