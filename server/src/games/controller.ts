@@ -134,7 +134,7 @@ export default class GameController {
     if (coordinatesUpdate.player === 'p1'){
       game.coordinates_p1 = coordinatesUpdate.coordinates
     }
-    if(coordinatesUpdate.player === 'p1'){
+    if(coordinatesUpdate.player === 'p2'){
       game.coordinates_p2 = coordinatesUpdate.coordinates
     }
 
