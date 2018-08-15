@@ -3,13 +3,10 @@ import Board from './Board'
 
 class BoardWrapper extends PureComponent {
   componentDidMount() {
-    document.addEventListener('keydown', (e) => {
-      this.props.onKeyPressed(e.key, this.props.playerNumber, this.props.game)
-    })
+    document.addEventListener('keydown', (e) => {this.props.onKeyPressed(e.key, this.props.playerNumber, this.props.game)}, true)
   }
-
   componentWillUnmount() {
-    document.removeEventListener('keydown', (e) => {}, null)
+    document.removeEventListener('keydown', (e) => {}, true)
   }
 
   render() {

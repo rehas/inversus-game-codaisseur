@@ -27,23 +27,19 @@ class GameDetails extends PureComponent {
     console.log(key)
     switch (key) {
       case 'ArrowLeft':
-        updatedPlayerCoordinates.X = currentPlayerCoordinates.X -1
-        updatedPlayerCoordinates.X < 0 ? updatedPlayerCoordinates.X = 15 : updatedPlayerCoordinates.X
+        updatedPlayerCoordinates.X = currentPlayerCoordinates.X -1 < 0 ? 15 : currentPlayerCoordinates.X -1
         this.props.updatePosition(p_num, updatedPlayerCoordinates, game.id)
         break;
       case 'ArrowUp':
-        updatedPlayerCoordinates.Y = currentPlayerCoordinates.Y -1
-        updatedPlayerCoordinates.Y < 0 ? updatedPlayerCoordinates.Y = 9 : updatedPlayerCoordinates.Y
+        updatedPlayerCoordinates.Y = currentPlayerCoordinates.Y -1 < 0 ? 9 : currentPlayerCoordinates.Y -1
         this.props.updatePosition(p_num, updatedPlayerCoordinates, game.id)
         break;
       case 'ArrowRight':
-        updatedPlayerCoordinates.X = currentPlayerCoordinates.X + 1
-        updatedPlayerCoordinates.X > 15 ? updatedPlayerCoordinates.X = 0: updatedPlayerCoordinates.X
+        updatedPlayerCoordinates.X = currentPlayerCoordinates.X + 1 > 15 ? 0 : currentPlayerCoordinates.X +1
         this.props.updatePosition(p_num, updatedPlayerCoordinates, game.id)
         break;
       case 'ArrowDown':
-        updatedPlayerCoordinates.Y = currentPlayerCoordinates.Y +1
-        updatedPlayerCoordinates.Y > 9 ? updatedPlayerCoordinates.Y = 0 : updatedPlayerCoordinates.Y
+        updatedPlayerCoordinates.Y = currentPlayerCoordinates.Y +1 > 9 ? 0 :  currentPlayerCoordinates.Y +1
         this.props.updatePosition(p_num, updatedPlayerCoordinates, game.id)
         break;
       case 'w':
@@ -81,7 +77,7 @@ class GameDetails extends PureComponent {
       .filter(p => p.symbol === game.winner)
       .map(p => p.userId)[0]
 
-    return (<Paper className="outer-paper"  tabIndex="0">
+    return (<div className="GameDetail-div"  tabIndex="0">
       <h1>Game #{game.id}</h1>
 
       <p>Status: {game.status}</p>
@@ -89,7 +85,7 @@ class GameDetails extends PureComponent {
       {
         game.status === 'started' &&
         player &&
-        <div>You're Player {player.player}! coordinates: {game.coordinates_p1.X}</div>
+        <div>You're Player {player.player}!</div>
       }
 
       {
@@ -109,7 +105,7 @@ class GameDetails extends PureComponent {
         game.status !== 'pending' &&
         <BoardWrapper board={game.board} playerNumber={player.player} coordinates_p1={game.coordinates_p1} coordinates_p2={game.coordinates_p2} onKeyPressed={this.onKeyPressed} game={game}/>
       }
-    </Paper>)
+    </div>)
   }
 }
 
