@@ -14,7 +14,6 @@ export const UPDATE_GAME_SUCCESS = 'UPDATE_GAME_SUCCESS'
 
 
 export const syncGame = data => {
-    // console.log("game synced")
     return {
       type: SYNC_GAME,
       payload : data.gameUpdate
@@ -29,10 +28,9 @@ export const updatePosition = (player, coordinates, gameId) => (dispatch, getSta
     player,
     coordinates
   }
-  console.log(coordinatesUpdate)
 
   request
-    .patch(`${baseUrl}/games/${gameId}`)
+    .patch(`${baseUrl}/coordinates/${gameId}`)
     .send(coordinatesUpdate)
     .then(result=> result)
     .catch()

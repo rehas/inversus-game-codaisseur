@@ -70,7 +70,7 @@ io.on('connect',  async socket => {
   let game: {} | undefined
 
   const syncer = setInterval(async function(){
-    console.log("Game id", gameId)
+    // console.log("Game id", gameId)
     if (gameId === 0){
       console.log("finding game")
       gameId = parseInt( socket.request.headers.referer.slice(-1))
@@ -80,7 +80,7 @@ io.on('connect',  async socket => {
     }
     // console.log(socket.request.headers.referer.slice(-1));
     // console.log("emitted sync", socket.request.user)
-    console.log(game)
+    // console.log(game)
     socket.emit('syncGame', {name:'hello', gameUpdate: game})
   }, 100)
 
