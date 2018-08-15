@@ -170,6 +170,7 @@ export default class GameController {
       if(checkIfShot(coordinatesUpdate.coordinates, game.coordinates_p2, coordinatesUpdate.beamDirection ))
       {
         game.winner = 1
+        game.status = 'finished'
       }
     }
     if(shootingPlayer === 'p2'){
@@ -177,6 +178,8 @@ export default class GameController {
       game.beam_p2 = coordinatesUpdate.beamDirection
       if(checkIfShot(coordinatesUpdate.coordinates, game.coordinates_p1, coordinatesUpdate.beamDirection )){
         game.winner = 2
+        game.status = 'finished'
+
       }
     }
     game.save()
