@@ -24,36 +24,29 @@ class GameDetails extends PureComponent {
     const currentPlayerCoordinates = game[`coordinates_p${player.player}`]
     let updatedPlayerCoordinates = {...currentPlayerCoordinates}
     const p_num = `p${player.player}`
-    console.log(key)
-    console.log(currentPlayerCoordinates)
     switch (key) {
       case 'ArrowLeft':
-        console.log("left")
         updatedPlayerCoordinates.X = currentPlayerCoordinates.X -1
         updatedPlayerCoordinates.X < 0 ? updatedPlayerCoordinates.X = 15 : updatedPlayerCoordinates.X
-        console.log(updatedPlayerCoordinates)
         this.props.updatePosition(p_num, updatedPlayerCoordinates, game.id)
         break;
       case 'ArrowUp':
         updatedPlayerCoordinates.Y = currentPlayerCoordinates.Y -1
         updatedPlayerCoordinates.Y < 0 ? updatedPlayerCoordinates.Y = 9 : updatedPlayerCoordinates.Y
-        console.log(updatedPlayerCoordinates)
         this.props.updatePosition(p_num, updatedPlayerCoordinates, game.id)
         break;
       case 'ArrowRight':
-        console.log("right")
-        updatedPlayerCoordinates.X = currentPlayerCoordinates.X +1
-        updatedPlayerCoordinates.X > 15 ? updatedPlayerCoordinates.X = 0 : updatedPlayerCoordinates.X
-        console.log(updatedPlayerCoordinates)
+        updatedPlayerCoordinates.X = currentPlayerCoordinates.X + 1
+        updatedPlayerCoordinates.X > 15 ? updatedPlayerCoordinates.X = 0: updatedPlayerCoordinates.X
         this.props.updatePosition(p_num, updatedPlayerCoordinates, game.id)
         break;
       case 'ArrowDown':
-        console.log("down")
         updatedPlayerCoordinates.Y = currentPlayerCoordinates.Y +1
         updatedPlayerCoordinates.Y > 9 ? updatedPlayerCoordinates.Y = 0 : updatedPlayerCoordinates.Y
-        console.log(updatedPlayerCoordinates)
         this.props.updatePosition(p_num, updatedPlayerCoordinates, game.id)
         break;
+      default:
+        return updatedPlayerCoordinates
     }
   }
 
