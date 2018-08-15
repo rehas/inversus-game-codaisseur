@@ -1,6 +1,6 @@
 import { 
   JsonController, Authorized, CurrentUser, Post, Param, BadRequestError, HttpCode, NotFoundError, ForbiddenError, Get, 
-  Body, Patch 
+  Body, Patch, Put 
 } from 'routing-controllers'
 import User from '../users/entity'
 import { Game, Player, Board, XYCoordinates } from './entities'
@@ -17,6 +17,8 @@ class GameUpdate {
   coordinates_p1: XYCoordinates
   coordinates_p2: XYCoordinates
 }
+
+
 
 @JsonController()
 export default class GameController {
@@ -112,6 +114,32 @@ export default class GameController {
       payload: game
     })
 
+    return game
+  }
+
+  @Patch('/coordinates/:id([0-9]+)/')
+  async updateCoordinates(
+    @Param('id') gameId : number,
+    @Body() cu
+  ){
+    console.log(cu.coordinatesUpdate)
+    console.log("patch request recieved")
+    const game = await Game.findOneById(gameId)
+    if (!game) throw new NotFoundError(`Game does not exist`)
+  
+    // cu.coordinatesUpdate {
+    //   cu.coordinatesUpdate: { player: 'p1', coordinates: { X: 5, Y: 5 } } }
+
+
+    if (cu.coordinatesUpdate.player === 'p1'){
+      game.coordinates_p1 = cu.coordinatesUpdate.coordinates
+    }
+    if(cu.coordinatesUpdate.player === 'p1'){
+      game.coordinates_p2 = cu.coordinatesUpdate.coordinates
+    }
+
+    game.save()
+    io.emit('syncGame', game)
     return game
   }
 

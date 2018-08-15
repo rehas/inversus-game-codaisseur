@@ -31,7 +31,7 @@ export const updatePosition = (player, coordinates, gameId) => (dispatch, getSta
   }
 
   request
-    .patch(`${baseUrl}/games/${gameId}/coordinates`)
+    .patch(`${baseUrl}/coordinates/${gameId}`)
     .send(coordidinatesUpdate)
     .then(result=> result)
     .catch()
