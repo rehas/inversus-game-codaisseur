@@ -179,12 +179,13 @@ export default class GameController {
       }
     }
     game.save()
-    io.emit('syncGame', game)
+    // io.emit('syncGame', {gameUpdate: game})
 
     if(!game.winner){
       setTimeout(()=>{
             shootingPlayer === 'p1' ? game.beam_p1 = null : game.beam_p2 = null;
             game.save()
+            // io.emit('syncGame', {gameUpdate: game})
           }, 1000)
     }
     return game

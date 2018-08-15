@@ -80,12 +80,9 @@ io.on('connect',  async socket => {
       
       // console.log(game)
     }
-    // console.log(socket.request.headers.referer.slice(-1));
-    // console.log("emitted sync", socket.request.user)
-    // console.log(game)
-    // console.log(game.coordinates_p1, game.coordinates_p2)
+    
     io.emit('syncGame', {gameUpdate: game})
-  }, 300)
+  }, 200)
 
   socket.on('disconnect', () => {
     console.log(`User ${name} just disconnected`)

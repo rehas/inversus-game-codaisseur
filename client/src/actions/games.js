@@ -30,8 +30,10 @@ export const updatePosition = (player, coordinates, gameId, beamDirection=null) 
   request
     .patch(`${baseUrl}/coordinates/${gameId}`)
     .send(coordinatesUpdate)
-    .then(result=> result)
-    .catch()
+    .then(result=> { return result
+      // dispatch(syncGame)
+    })
+    .catch(e=>console.log("you've got some error on update", e))
 }
 
 const updateGames = games => ({
