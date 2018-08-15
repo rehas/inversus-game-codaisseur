@@ -20,6 +20,7 @@ const renderCel = (playerNumber, coordinates_p1, coordinates_p2, rowIndex, cellI
 }
 
 export default ({board, coordinates_p1, coordinates_p2, playerNumber}) => {
+
   return (
     <div className='board' >
       {board.map((cells, rowIndex) =>

@@ -5,8 +5,8 @@ import {getGames, joinGame, updateGame, syncGame, updatePosition} from '../../ac
 import {getUsers} from '../../actions/users'
 import {userId} from '../../jwt'
 import Paper from 'material-ui/Paper'
-import Board from './board/Board'
 import './GameDetails.css'
+import BoardWrapper from './board/BoardWrapper'
 
 class GameDetails extends PureComponent {
 
@@ -14,16 +14,16 @@ class GameDetails extends PureComponent {
     if (this.props.authenticated) {
       if (this.props.game === null) this.props.getGames()
       if (this.props.users === null) this.props.getUsers()
-      
     }
   }
 
   joinGame = () => this.props.joinGame(this.props.game.id)
 
   onKeyPressed = (key, player, game) => {
-    const currentPlayerCoordinates = game[`coordinates_p${player.player}`]
+    console.log(game)
+    const currentPlayerCoordinates = game[`coordinates_p${player}`]
     let updatedPlayerCoordinates = {...currentPlayerCoordinates}
-    const p_num = `p${player.player}`
+    const p_num = `p${player}`
     console.log(key)
     switch (key) {
       case 'ArrowLeft':
@@ -81,7 +81,7 @@ class GameDetails extends PureComponent {
       .filter(p => p.symbol === game.winner)
       .map(p => p.userId)[0]
 
-    return (<Paper className="outer-paper" onKeyDown={(e) => this.onKeyPressed(e.key, player, game)} tabIndex="0">
+    return (<Paper className="outer-paper"  tabIndex="0">
       <h1>Game #{game.id}</h1>
 
       <p>Status: {game.status}</p>
@@ -107,7 +107,7 @@ class GameDetails extends PureComponent {
 
       {
         game.status !== 'pending' &&
-        <Board board={game.board} playerNumber={player.player} coordinates_p1={game.coordinates_p1} coordinates_p2={game.coordinates_p2}/>
+        <BoardWrapper board={game.board} playerNumber={player.player} coordinates_p1={game.coordinates_p1} coordinates_p2={game.coordinates_p2} onKeyPressed={this.onKeyPressed} game={game}/>
       }
     </Paper>)
   }
