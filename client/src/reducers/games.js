@@ -23,12 +23,12 @@ export default (state = null, {type, payload}) => {
       }
     
     case SYNC_GAME:
-      if (payload){
-        console.log(payload)
-        return {
+    if (payload){
+        const newState = {
           ...state,
-          [payload.id]: payload
         }
+        newState[payload.id] = payload
+        return newState
       }else{
         return state
       }

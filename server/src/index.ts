@@ -67,11 +67,11 @@ io.on('connect',  async socket => {
   console.log(`User ${name} just connected`)
   
   let gameId = 0;
-  let game: {} | undefined
+  let game: Game | undefined
 
   const syncer = setInterval(async function(){
     // console.log("Game id", gameId)
-    if (gameId === 0){
+    if (gameId === 0 || gameId > 0){
       console.log("finding game")
       gameId = parseInt( socket.request.headers.referer.slice(-1))
       console.log('gameId', gameId)
@@ -81,8 +81,9 @@ io.on('connect',  async socket => {
     // console.log(socket.request.headers.referer.slice(-1));
     // console.log("emitted sync", socket.request.user)
     // console.log(game)
-    socket.emit('syncGame', {name:'hello', gameUpdate: game})
-  }, 100)
+    // console.log(game.coordinates_p1, game.coordinates_p2)
+    io.emit('syncGame', {gameUpdate: game})
+  }, 200)
 
   socket.on('disconnect', () => {
     console.log(`User ${name} just disconnected`)
