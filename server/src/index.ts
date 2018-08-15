@@ -77,6 +77,7 @@ io.on('connect',  async socket => {
       gameId = parseInt( socket.request.headers.referer.slice(li+1))
       console.log('gameId', gameId)
       game = await Game.findOneById(gameId)
+      
       // console.log(game)
     }
     // console.log(socket.request.headers.referer.slice(-1));
@@ -84,14 +85,17 @@ io.on('connect',  async socket => {
     // console.log(game)
     // console.log(game.coordinates_p1, game.coordinates_p2)
     io.emit('syncGame', {gameUpdate: game})
-  }, 100)
+  }, 200)
 
   socket.on('disconnect', () => {
     console.log(`User ${name} just disconnected`)
     clearInterval(syncer)
   })
-
+    
 })
+
+
+
 
 setupDb()
   .then(_ => {

@@ -23,7 +23,8 @@ export const updatePosition = (player, coordinates, gameId, beamDirection=null) 
 
   const coordinatesUpdate = {
     player,
-    coordinates
+    coordinates, 
+    beamDirection
   }
 
   request

@@ -129,13 +129,23 @@ export default class GameController {
   
     if (coordinatesUpdate.player === 'p1'){
       game.coordinates_p1 = coordinatesUpdate.coordinates
+      game.beam_p1 = coordinatesUpdate.beamDirection
     }
     if(coordinatesUpdate.player === 'p2'){
       game.coordinates_p2 = coordinatesUpdate.coordinates
+      game.beam_p2 = coordinatesUpdate.beamDirection
     }
 
     game.save()
     io.emit('syncGame', game)
+
+    if(coordinatesUpdate.beamDirection){
+      setTimeout(()=>{
+        coordinatesUpdate.player === 'p1' ? game.beam_p1 = null : game.beam_p2 = null;
+        game.save()
+      }, 1000)
+    }
+
     return game
   }
 
