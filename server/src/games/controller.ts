@@ -123,7 +123,7 @@ export default class GameController {
     @Body() coordinatesUpdate
   ){
     console.log(coordinatesUpdate)
-    console.log("patch request recieved")
+    console.log("patch request received")
     const game = await Game.findOneById(gameId)
     if (!game) throw new NotFoundError(`Game does not exist`)
   
@@ -134,7 +134,7 @@ export default class GameController {
     if (coordinatesUpdate.player === 'p1'){
       game.coordinates_p1 = coordinatesUpdate.coordinates
     }
-    if(coordinatesUpdate.player === 'p1'){
+    if(coordinatesUpdate.player === 'p2'){
       game.coordinates_p2 = coordinatesUpdate.coordinates
     }
 
