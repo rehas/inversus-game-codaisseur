@@ -4,6 +4,14 @@ import {logout} from './users'
 import {isExpired} from '../jwt'
 
 export const SYNC_GAME = 'SYNC_GAME'
+export const ADD_GAME = 'ADD_GAME'
+export const UPDATE_GAME = 'UPDATE_GAME'
+export const UPDATE_GAMES = 'UPDATE_GAMES'
+export const JOIN_GAME_SUCCESS = 'JOIN_GAME_SUCCESS'
+export const UPDATE_GAME_SUCCESS = 'UPDATE_GAME_SUCCESS'
+
+
+
 
 export const syncGame = data => {
     console.log("game synced")
@@ -13,14 +21,21 @@ export const syncGame = data => {
     }
 }
 
+export const updatePosition = (player, coordinates, gameId) => (dispatch, getState) =>{
+  const state = getState()
+  if(!state.currentUser) return null
 
+  const coordidinatesUpdate = {
+    player,
+    coordinates
+  }
 
-
-export const ADD_GAME = 'ADD_GAME'
-export const UPDATE_GAME = 'UPDATE_GAME'
-export const UPDATE_GAMES = 'UPDATE_GAMES'
-export const JOIN_GAME_SUCCESS = 'JOIN_GAME_SUCCESS'
-export const UPDATE_GAME_SUCCESS = 'UPDATE_GAME_SUCCESS'
+  request
+    .patch(`${baseUrl}/games/${gameId}/coordinates`)
+    .send(coordidinatesUpdate)
+    .then(result=> result)
+    .catch()
+}
 
 const updateGames = games => ({
   type: UPDATE_GAMES,
