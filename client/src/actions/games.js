@@ -6,7 +6,7 @@ import {isExpired} from '../jwt'
 export const SYNC_GAME = 'SYNC_GAME'
 
 export const syncGame = data => {
-    console.log("game synced")
+    // console.log("game synced")
     return {
       type: SYNC_GAME,
       payload : data.gameUpdate

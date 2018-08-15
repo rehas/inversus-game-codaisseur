@@ -12,7 +12,7 @@ export default class SocketIO {
     });
     this.socket.on('action', payload => dispatch(payload))
     this.socket.on('syncGame', data=> {
-      console.log("SyncGame emission recieved")
+      // console.log("SyncGame emission recieved")
       return dispatch(syncGame(data))
     })
   }

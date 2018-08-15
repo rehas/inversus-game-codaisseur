@@ -20,20 +20,34 @@ class GameDetails extends PureComponent {
 
   joinGame = () => this.props.joinGame(this.props.game.id)
 
-  onKeyPressed = (key) => {
+  onKeyPressed = (key, player, game) => {
+    const currentPlayerCoordinates = game[`coordinates_p${player.player}`]
+    let updatedPlayerCoordinates = {...currentPlayerCoordinates}
     console.log(key)
+    console.log(currentPlayerCoordinates)
     switch (key) {
       case 'ArrowLeft':
         console.log("left")
+        updatedPlayerCoordinates.X = currentPlayerCoordinates.X -1
+        updatedPlayerCoordinates.X < 0 ? updatedPlayerCoordinates.X = 15 : updatedPlayerCoordinates.X
+        console.log(updatedPlayerCoordinates)
         break;
       case 'ArrowUp':
-        console.log("up")
+        updatedPlayerCoordinates.Y = currentPlayerCoordinates.Y -1
+        updatedPlayerCoordinates.Y < 0 ? updatedPlayerCoordinates.Y = 9 : updatedPlayerCoordinates.Y
+        console.log(updatedPlayerCoordinates)
         break;
       case 'ArrowRight':
         console.log("right")
+        updatedPlayerCoordinates.X = currentPlayerCoordinates.X +1
+        updatedPlayerCoordinates.X > 15 ? updatedPlayerCoordinates.X = 0 : updatedPlayerCoordinates.X
+        console.log(updatedPlayerCoordinates)
         break;
       case 'ArrowDown':
         console.log("down")
+        updatedPlayerCoordinates.Y = currentPlayerCoordinates.Y +1
+        updatedPlayerCoordinates.Y > 9 ? updatedPlayerCoordinates.Y = 0 : updatedPlayerCoordinates.Y
+        console.log(updatedPlayerCoordinates)
         break;
     }
   }
@@ -56,7 +70,7 @@ class GameDetails extends PureComponent {
       .filter(p => p.symbol === game.winner)
       .map(p => p.userId)[0]
 
-    return (<Paper className="outer-paper" onKeyDown={(e) => this.onKeyPressed(e.key)} tabIndex="0">
+    return (<Paper className="outer-paper" onKeyDown={(e) => this.onKeyPressed(e.key, player, game)} tabIndex="0">
       <h1>Game #{game.id}</h1>
 
       <p>Status: {game.status}</p>
