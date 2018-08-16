@@ -1,0 +1,7 @@
+#NavBar {
+  background-color: green;
+  z-index: 1; }
+  #NavBar h1 {
+    display: inline-block; }
+  #NavBar .NavBar-Link {
+    display: inline-block; }
