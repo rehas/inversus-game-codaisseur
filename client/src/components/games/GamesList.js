@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react'
-import {getGames, createGame} from '../../actions/games'
+import {getGames, createGame, joinGame} from '../../actions/games'
 import {getUsers} from '../../actions/users'
 import {connect} from 'react-redux'
 import {Redirect} from 'react-router-dom'
@@ -13,44 +13,59 @@ class GamesList extends PureComponent {
     }
   }
 
+
   renderGame = (game) => {
     const {users, history} = this.props
 
+    const joinGame = () => {
+      this.props.joinGame(game.id)
+      history.push(`/games/${game.id}`)
+    }
+
     return (<div key={game.id} className="game-card">
       <div>
-        <p>
-          This game is played by&nbsp;
-          {
-            game.players
-              .map(player => users[player.userId].firstName)
-              .join(' and ')
-          }
-        </p>
         <h2>Game #{game.id}</h2>
-        <p>
-          Status: {game.status}
-        </p>
+          <div className={'game-card-pending'}>
+            <p>
+              This game is being played by: <br/>
+              {
+                game.players
+                  .map(player => users[player.userId].username)
+                  .join(' and ')
+              }
+            </p>
+        {game.status === 'pending' && (
+          <div>
+            <p>Status: Waiting for Player 2...</p>
+            <button onClick={joinGame}>I'm Player 2!</button>
+          </div>
+          )
+        }
+        {game.status === 'started' && <p>Status: In progress</p>}
+        {game.status === 'finished' && <p>Status: Finished <br/> Player {game.winner} was the winner! </p>}
+
+
+          </div>
       </div>
-        <button onClick={() => history.push(`/games/${game.id}`)}>
-          Watch
-        </button>
     </div>)
   }
 
   render() {
-    const {games, users, authenticated, createGame} = this.props
-
+    const {games, users, authenticated, createGame, history} = this.props
+    const newGame = () => {
+      createGame()
+      const gameIds = Object.keys(games).map(gameId => parseInt(gameId))
+      const gameId = Math.max(...gameIds)
+      history.push(`/games/${gameId}`)
+    }
     if (!authenticated) return (
 			<Redirect to="/login" />
 		)
 
     if (games === null || users === null) return null
 
-    return (<div className="outer-paper">
-      <button
-        onClick={createGame}
-        className="create-game"
-      >
+    return (<div className="game-list">
+      <button onClick={newGame} className={"game-list-create-game-button"}>
         Create Game
       </button>
 
@@ -68,4 +83,4 @@ const mapStateToProps = state => ({
     null : Object.values(state.games).sort((a, b) => b.id - a.id)
 })
 
-export default connect(mapStateToProps, {getGames, getUsers, createGame})(GamesList)
+export default connect(mapStateToProps, {getGames, getUsers, createGame, joinGame})(GamesList)

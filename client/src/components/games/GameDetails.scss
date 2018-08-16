@@ -1,11 +1,31 @@
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@mixin typewriter {
+  overflow: hidden;
+  white-space: nowrap;
+  animation:
+    typing 3.5s steps(40, end)
+}
+
 .GameDetail-div {
   text-align: center;
-  margin: -1vh 0 0 0;
+  margin: 2vh 0 0 0;
   width: 100vw;
   height: 90vh;
 
-  h1 {
-    margin: 0;
+  .GameDetail-div-result,
+  .GameDetail-div-waiting
+  {
+    height:60vh;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin: auto;
+    justify-content: space-evenly;
+    @include typewriter;
   }
 }
 

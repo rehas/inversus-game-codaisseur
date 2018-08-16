@@ -5,13 +5,8 @@ import SignupPage from './components/signup/SignupPage'
 import GamesList from './components/games/GamesList'
 import GameDetails from './components/games/GameDetails'
 import LogoutPage from './components/logout/LogoutPage'
-import './App.css'
-import TopBar from './components/layout/TopBar'
+import './styles/App.css'
 import NavBar from './components/layout/NavBar'
-
-// <Route exact path="/signup" component={SignupPage} />
-// <Route exact path="/games" component={GamesList} />
-// <Route exact path="/games/:id" component={GameDetails} />
 
 class App extends Component {
   render() {
@@ -19,10 +14,10 @@ class App extends Component {
       <Router>
         <div id={'App'}>
           <nav>
-            <TopBar />
+            {/*<TopBar />*/}
             <NavBar/>
           </nav>
-          <main style={{marginTop:75}}>
+          <main>
             <Route exact path="/login" component={LoginPage} />
             <Route exact path="/logout" component={LogoutPage} />
             <Route exact path="/signup" component={SignupPage} />

@@ -4,7 +4,7 @@ import {Redirect} from 'react-router-dom'
 import {getGames, joinGame, syncGame, updatePosition} from '../../actions/games'
 import {getUsers} from '../../actions/users'
 import {userId} from '../../jwt'
-import './GameDetails.scss'
+import './GameDetails.css'
 import BoardWrapper from './board/BoardWrapper'
 
 class GameDetails extends PureComponent {
@@ -81,21 +81,19 @@ class GameDetails extends PureComponent {
       {
         game.status === 'started' &&
         player &&
-        <div>You're Player {player.player}!</div>
+        <div>You're Player {player}!</div>
       }
+
+
+      <hr />
 
       {
         game.status === 'pending' &&
-        game.players.map(p => p.userId).indexOf(userId) === -1 &&
-        <button onClick={this.joinGame}>Join Game</button>
+        <div className={'GameDetail-div-pending'}>
+          {(game.players.map(p => p.userId).indexOf(userId) === -1) ? <button onClick={this.joinGame}>Join Game</button> : null}
+          {(game.players.map(p => p.userId).indexOf(userId) === 0) ? <div className={'GameDetail-div-waiting'}><h2>Waiting for Player 2...</h2></div> : null}
+        </div>
       }
-
-      {
-        winner &&
-        <p>Winner: {users[winner].firstName} </p>
-      }
-
-      <hr />
 
       {
         game.status === 'started' &&
@@ -109,8 +107,12 @@ class GameDetails extends PureComponent {
           game={game}/>
       }
 
-      { game.status === 'finished' &&
-      <div> Player {game.winner} won! </div>}
+      {
+        game.status === 'finished' &&
+        <div className={'GameDetail-div-result'}>
+          { parseInt(game.winner) === player ? <h1>You won!</h1> : <h1>You lost!</h1>}
+        </div>
+      }
     </div>)
   }
 }
