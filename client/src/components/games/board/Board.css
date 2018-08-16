@@ -1,3 +1,15 @@
+@keyframes whiteBeam {
+  0%   {background-color: inherit;}
+  50% {background-color: red;}
+  100% {background-color: inherit;}
+}
+
+@keyframes blackBeam {
+  0%   {background-color: inherit;}
+  50% {background-color: blue;}
+  100% {background-color: inherit;}
+}
+
 .board {
   /*box-sizing: border-box;*/
   border: 2px solid #000000;
@@ -39,10 +51,19 @@ p {
 /*.board-cell-coordinates {*/
 /*}*/
 
+.board-cell-laser-1,
+.board-cell-laser-2 {
+  height: 100%;
+  width: 100%;
+}
 .board-cell-laser-1 {
-  background-color: red;
+  animation-name: whiteBeam;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-in-out;
 }
 
-.board-cell-laser-1 {
-  background-color: blue;
+.board-cell-laser-2 {
+  animation-name: blackBeam;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-in-out;
 }

@@ -6,8 +6,8 @@ export default ({playerNumber, coordinates_p1, coordinates_p2, beam_p1, beam_p2,
 
   return (
     <div className={'board-row'}>
-      <Cell playerNumber={playerNumber} coordinates_p1={coordinates_p1} coordinates_p2={coordinates_p2} beam_p1={beam_p1} beam_p2={beam_p2} rowIndex={rowIndex} cellIndex={1}/>
       <Cell playerNumber={playerNumber} coordinates_p1={coordinates_p1} coordinates_p2={coordinates_p2} beam_p1={beam_p1} beam_p2={beam_p2} rowIndex={rowIndex} cellIndex={0}/>
+      <Cell playerNumber={playerNumber} coordinates_p1={coordinates_p1} coordinates_p2={coordinates_p2} beam_p1={beam_p1} beam_p2={beam_p2} rowIndex={rowIndex} cellIndex={1}/>
       <Cell playerNumber={playerNumber} coordinates_p1={coordinates_p1} coordinates_p2={coordinates_p2} beam_p1={beam_p1} beam_p2={beam_p2} rowIndex={rowIndex} cellIndex={2}/>
       <Cell playerNumber={playerNumber} coordinates_p1={coordinates_p1} coordinates_p2={coordinates_p2} beam_p1={beam_p1} beam_p2={beam_p2} rowIndex={rowIndex} cellIndex={3}/>
       <Cell playerNumber={playerNumber} coordinates_p1={coordinates_p1} coordinates_p2={coordinates_p2} beam_p1={beam_p1} beam_p2={beam_p2} rowIndex={rowIndex} cellIndex={4}/>
