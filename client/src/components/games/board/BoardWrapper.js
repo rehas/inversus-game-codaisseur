@@ -10,10 +10,10 @@ class BoardWrapper extends PureComponent {
         if(this.state.down) return null
         this.setState({down: true})
         setTimeout(() => {
-          this.props.onKeyPress(e.key, this.props.playerNumber, this.props.game)
+          this.props.onKeyDown(e.key, this.props.playerNumber, this.props.game)
           this.setState({down: false})
         }, 150)
-        // this.props.onKeyPress(e.key, this.props.playerNumber, this.props.game)
+        // this.props.onKeyDown(e.key, this.props.playerNumber, this.props.game)
 
       }
     }

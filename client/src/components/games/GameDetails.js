@@ -18,38 +18,38 @@ class GameDetails extends PureComponent {
 
   joinGame = () => this.props.joinGame(this.props.game.id)
 
-  onKeyPress = (key, player, game) => {
-    const currentPlayerCoordinates = game[`coordinates_p${player}`]
-    let updatedPlayerCoordinates = {...currentPlayerCoordinates}
+  onKeyDown = (key, player, game) => {
+    const lastKnownPlayerCoordinates = game[`coordinates_p${player}`]
+    let updatedPlayerCoordinates = {...lastKnownPlayerCoordinates}
     const p_num = `p${player}`
-    const otherPlayerCoordinates = player ===1 ? this.props.game.coordinates_p2 : this.props.game.coordinates_p1
+    const otherPlayerCoordinates = player === 1 ? game.coordinates_p2 : game.coordinates_p1
     const bumpPlayer = (updatedPlayerCoordinates) => updatedPlayerCoordinates.Y === otherPlayerCoordinates.Y && updatedPlayerCoordinates.X === otherPlayerCoordinates.X
-    const updatePosition = (direction) => this.props.updatePosition(p_num, updatedPlayerCoordinates, game.id, direction)
+    const updatePosition = (coordinates, direction) => this.props.updatePosition(p_num, coordinates, game.id, direction)
     switch (key) {
       case 'ArrowLeft':
-        updatedPlayerCoordinates.X = currentPlayerCoordinates.X -1 < 0 ? 15 : currentPlayerCoordinates.X -1
-        if(bumpPlayer(updatedPlayerCoordinates)) return this.props.updatePosition(p_num, currentPlayerCoordinates, game.id, undefined)
-        return updatePosition(undefined)
+        updatedPlayerCoordinates.X = lastKnownPlayerCoordinates.X -1 < 0 ? 15 : lastKnownPlayerCoordinates.X -1
+        if(bumpPlayer(updatedPlayerCoordinates)) return updatePosition(lastKnownPlayerCoordinates)
+        return updatePosition(updatedPlayerCoordinates)
       case 'ArrowRight':
-        updatedPlayerCoordinates.X = currentPlayerCoordinates.X + 1 > 15 ? 0 : currentPlayerCoordinates.X +1
-        if(bumpPlayer(updatedPlayerCoordinates)) return this.props.updatePosition(p_num, currentPlayerCoordinates, game.id, undefined)
-        return updatePosition(undefined)
+        updatedPlayerCoordinates.X = lastKnownPlayerCoordinates.X + 1 > 15 ? 0 : lastKnownPlayerCoordinates.X +1
+        if(bumpPlayer(updatedPlayerCoordinates)) return updatePosition(lastKnownPlayerCoordinates)
+        return updatePosition(updatedPlayerCoordinates)
       case 'ArrowUp':
-        updatedPlayerCoordinates.Y = currentPlayerCoordinates.Y -1 < 0 ? 9 : currentPlayerCoordinates.Y -1
-        if(bumpPlayer(updatedPlayerCoordinates)) return this.props.updatePosition(p_num, currentPlayerCoordinates, game.id, undefined)
-        return updatePosition(undefined)
+        updatedPlayerCoordinates.Y = lastKnownPlayerCoordinates.Y -1 < 0 ? 9 : lastKnownPlayerCoordinates.Y -1
+        if(bumpPlayer(updatedPlayerCoordinates)) return updatePosition(lastKnownPlayerCoordinates)
+        return updatePosition(updatedPlayerCoordinates)
       case 'ArrowDown':
-        updatedPlayerCoordinates.Y = currentPlayerCoordinates.Y +1 > 9 ? 0 :  currentPlayerCoordinates.Y +1
-        if(bumpPlayer(updatedPlayerCoordinates)) return this.props.updatePosition(p_num, currentPlayerCoordinates, game.id, undefined)
-        return updatePosition(undefined)
+        updatedPlayerCoordinates.Y = lastKnownPlayerCoordinates.Y +1 > 9 ? 0 :  lastKnownPlayerCoordinates.Y +1
+        if(bumpPlayer(updatedPlayerCoordinates)) return updatePosition(lastKnownPlayerCoordinates)
+        return updatePosition(updatedPlayerCoordinates)
       case 'w':
-        return updatePosition('up')
+        return updatePosition(updatedPlayerCoordinates, 'up')
       case 'a':
-        return updatePosition('left')
+        return updatePosition(updatedPlayerCoordinates, 'left')
       case 's':
-        return updatePosition('down')
+        return updatePosition(updatedPlayerCoordinates, 'down')
       case 'd':
-        return updatePosition('right')
+        return updatePosition(updatedPlayerCoordinates, 'right')
       default:
         return updatedPlayerCoordinates
     }
@@ -105,7 +105,7 @@ class GameDetails extends PureComponent {
           coordinates_p2={game.coordinates_p2}
           beam_p1 = {game.beam_p1}
           beam_p2 = {game.beam_p2}
-          onKeyPress={this.onKeyPress}
+          onKeyDown={this.onKeyDown}
           game={game}/>
       }
 
