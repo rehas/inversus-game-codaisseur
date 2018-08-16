@@ -18,39 +18,31 @@ class GameDetails extends PureComponent {
 
   joinGame = () => this.props.joinGame(this.props.game.id)
 
-  onKeyPressed = (key, player, game) => {
+  onKeyPress = (key, player, game) => {
     const currentPlayerCoordinates = game[`coordinates_p${player}`]
     let updatedPlayerCoordinates = {...currentPlayerCoordinates}
     const p_num = `p${player}`
     switch (key) {
       case 'ArrowLeft':
         updatedPlayerCoordinates.X = currentPlayerCoordinates.X -1 < 0 ? 15 : currentPlayerCoordinates.X -1
-        this.props.updatePosition(p_num, updatedPlayerCoordinates, game.id)
-        break;
+        return this.props.updatePosition(p_num, updatedPlayerCoordinates, game.id)
       case 'ArrowUp':
         updatedPlayerCoordinates.Y = currentPlayerCoordinates.Y -1 < 0 ? 9 : currentPlayerCoordinates.Y -1
-        this.props.updatePosition(p_num, updatedPlayerCoordinates, game.id)
-        break;
+        return this.props.updatePosition(p_num, updatedPlayerCoordinates, game.id)
       case 'ArrowRight':
         updatedPlayerCoordinates.X = currentPlayerCoordinates.X + 1 > 15 ? 0 : currentPlayerCoordinates.X +1
-        this.props.updatePosition(p_num, updatedPlayerCoordinates, game.id)
-        break;
+        return this.props.updatePosition(p_num, updatedPlayerCoordinates, game.id)
       case 'ArrowDown':
         updatedPlayerCoordinates.Y = currentPlayerCoordinates.Y +1 > 9 ? 0 :  currentPlayerCoordinates.Y +1
-        this.props.updatePosition(p_num, updatedPlayerCoordinates, game.id)
-        break;
+        return this.props.updatePosition(p_num, updatedPlayerCoordinates, game.id)
       case 'w':
-        this.props.updatePosition(p_num, updatedPlayerCoordinates, game.id, 'up')
-        break;
+        return this.props.updatePosition(p_num, updatedPlayerCoordinates, game.id, 'up')
       case 'a':
-        this.props.updatePosition(p_num, updatedPlayerCoordinates, game.id, 'left')
-        break;
+        return this.props.updatePosition(p_num, updatedPlayerCoordinates, game.id, 'left')
       case 's':
-        this.props.updatePosition(p_num, updatedPlayerCoordinates, game.id, 'down')
-        break;
+        return this.props.updatePosition(p_num, updatedPlayerCoordinates, game.id, 'down')
       case 'd':
-        this.props.updatePosition(p_num, updatedPlayerCoordinates, game.id, 'right')
-        break;
+        return this.props.updatePosition(p_num, updatedPlayerCoordinates, game.id, 'right')
       default:
         return updatedPlayerCoordinates
     }
@@ -106,7 +98,7 @@ class GameDetails extends PureComponent {
           coordinates_p2={game.coordinates_p2}
           beam_p1 = {game.beam_p1}
           beam_p2 = {game.beam_p2}
-          onKeyPressed={this.onKeyPressed}
+          onKeyPress={this.onKeyPress}
           game={game}/>
       }
 
