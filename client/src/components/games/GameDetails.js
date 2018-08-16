@@ -4,7 +4,7 @@ import {Redirect} from 'react-router-dom'
 import {getGames, joinGame, updateGame, syncGame, updatePosition} from '../../actions/games'
 import {getUsers} from '../../actions/users'
 import {userId} from '../../jwt'
-import './GameDetails.css'
+import './GameDetails.scss'
 import BoardWrapper from './board/BoardWrapper'
 
 class GameDetails extends PureComponent {

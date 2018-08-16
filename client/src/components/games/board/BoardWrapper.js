@@ -3,7 +3,7 @@ import Board from './Board'
 
 class BoardWrapper extends PureComponent {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       handleKeyPress: (e) => this.props.onKeyPressed(e.key, this.props.playerNumber, this.props.game)
     };
