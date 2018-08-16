@@ -28,19 +28,19 @@ class GameDetails extends PureComponent {
     switch (key) {
       case 'ArrowLeft':
         updatedPlayerCoordinates.X = currentPlayerCoordinates.X -1 < 0 ? 15 : currentPlayerCoordinates.X -1
-        if(bumpPlayer(updatedPlayerCoordinates)) return
+        if(bumpPlayer(updatedPlayerCoordinates)) return this.props.updatePosition(p_num, currentPlayerCoordinates, game.id, undefined)
         return updatePosition(undefined)
       case 'ArrowRight':
         updatedPlayerCoordinates.X = currentPlayerCoordinates.X + 1 > 15 ? 0 : currentPlayerCoordinates.X +1
-        if(bumpPlayer(updatedPlayerCoordinates)) return
+        if(bumpPlayer(updatedPlayerCoordinates)) return this.props.updatePosition(p_num, currentPlayerCoordinates, game.id, undefined)
         return updatePosition(undefined)
       case 'ArrowUp':
         updatedPlayerCoordinates.Y = currentPlayerCoordinates.Y -1 < 0 ? 9 : currentPlayerCoordinates.Y -1
-        if(bumpPlayer(updatedPlayerCoordinates)) return
+        if(bumpPlayer(updatedPlayerCoordinates)) return this.props.updatePosition(p_num, currentPlayerCoordinates, game.id, undefined)
         return updatePosition(undefined)
       case 'ArrowDown':
         updatedPlayerCoordinates.Y = currentPlayerCoordinates.Y +1 > 9 ? 0 :  currentPlayerCoordinates.Y +1
-        if(bumpPlayer(updatedPlayerCoordinates)) return
+        if(bumpPlayer(updatedPlayerCoordinates)) return this.props.updatePosition(p_num, currentPlayerCoordinates, game.id, undefined)
         return updatePosition(undefined)
       case 'w':
         return updatePosition('up')
