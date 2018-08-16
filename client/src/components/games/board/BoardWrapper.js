@@ -46,7 +46,6 @@ class BoardWrapper extends PureComponent {
   render() {
     return (
       <Board
-        board={this.props.board}
         playerNumber={this.props.playerNumber}
         coordinates_p1={this.props.coordinates_p1}
         coordinates_p2={this.props.coordinates_p2}
