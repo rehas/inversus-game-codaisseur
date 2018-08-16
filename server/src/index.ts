@@ -69,29 +69,31 @@ io.on('connect',  async socket => {
   let gameId = 0;
   let game: Game | undefined
 
-  const syncer = setInterval(async function(){
-    // console.log("Game id", gameId)
+
+  // const syncer = setInterval(async function(){
+  //   // console.log("Game id", gameId)
     if (gameId === 0 || gameId > 0){
       console.log("finding game")
       const li = socket.request.headers.referer.lastIndexOf('/')
       gameId = parseInt( socket.request.headers.referer.slice(li+1))
       console.log('gameId', gameId)
       game = await Game.findOneById(gameId)
-      // console.log(game)
+      
+      console.log(game)
     }
-    // console.log(socket.request.headers.referer.slice(-1));
-    // console.log("emitted sync", socket.request.user)
-    // console.log(game)
-    // console.log(game.coordinates_p1, game.coordinates_p2)
+    
     io.emit('syncGame', {gameUpdate: game})
-  }, 100)
+  // }, 200)
 
   socket.on('disconnect', () => {
     console.log(`User ${name} just disconnected`)
-    clearInterval(syncer)
+    // clearInterval(syncer)
   })
-
+    
 })
+
+
+
 
 setupDb()
   .then(_ => {

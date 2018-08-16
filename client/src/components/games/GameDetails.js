@@ -6,7 +6,6 @@ import {getUsers} from '../../actions/users'
 import {userId} from '../../jwt'
 import './GameDetails.css'
 import BoardWrapper from './board/BoardWrapper'
-import Typography from '../../../node_modules/material-ui/Typography/Typography'
 
 class GameDetails extends PureComponent {
 
@@ -76,7 +75,6 @@ class GameDetails extends PureComponent {
       .map(p => p.userId)[0]
 
     return (<div className="GameDetail-div"  tabIndex="0">
-      <Typography>
       <h1>Game #{game.id}</h1>
 
       <p>Status: {game.status}</p>
@@ -101,10 +99,19 @@ class GameDetails extends PureComponent {
       <hr />
 
       {
-        game.status !== 'pending' &&
-        <BoardWrapper board={game.board} playerNumber={player.player} coordinates_p1={game.coordinates_p1} coordinates_p2={game.coordinates_p2} onKeyPressed={this.onKeyPressed} game={game}/>
+        game.status === 'started' &&
+        <BoardWrapper
+          playerNumber={player.player}
+          coordinates_p1={game.coordinates_p1}
+          coordinates_p2={game.coordinates_p2}
+          beam_p1 = {game.beam_p1}
+          beam_p2 = {game.beam_p2}
+          onKeyPressed={this.onKeyPressed}
+          game={game}/>
       }
-      </Typography>
+
+      { game.status === 'finished' &&
+      <div> Player {game.winner} won! </div>}
     </div>)
   }
 }
