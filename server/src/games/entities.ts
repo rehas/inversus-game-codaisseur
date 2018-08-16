@@ -2,21 +2,15 @@ import { BaseEntity, PrimaryGeneratedColumn, Column, Entity, Index, OneToMany, M
 import User from '../users/entity'
 
 export type PlayerNumber = 1 | 2
-export type RowValue = PlayerNumber | null
-export type Row = [ RowValue, RowValue, RowValue, RowValue, RowValue, RowValue, RowValue, RowValue, RowValue, RowValue, RowValue , RowValue , RowValue , RowValue , RowValue , RowValue  ]
-export type Board = [ Row, Row, Row, Row, Row, Row, Row, Row, Row, Row]
 export type XCoordinate = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15
 export type YCoordinate = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 export type XYCoordinates = { X: XCoordinate,  Y: YCoordinate }
 export type Direction = 'up' | 'left' | 'down '| 'right'
-export type BeamCell = {coordinate: XYCoordinates, direction: Direction}
-export type Beam = null |  BeamCell
+export type Beam = null |  Direction
 
 
 type Status = 'pending' | 'started' | 'finished'
 
-const emptyRow: Row = [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
-const emptyBoard: Board = [ emptyRow, emptyRow, emptyRow, emptyRow, emptyRow, emptyRow, emptyRow, emptyRow, emptyRow, emptyRow]
 const player1Start: XYCoordinates = {X: 0, Y: 0}
 const player2Start: XYCoordinates = {X: 15, Y: 9}
 
@@ -25,9 +19,6 @@ export class Game extends BaseEntity {
 
   @PrimaryGeneratedColumn()
   id?: number
-
-  @Column('json', {default: emptyBoard})
-  board: Board
 
   @Column('char', {length:1, nullable: true})
   winner: PlayerNumber
