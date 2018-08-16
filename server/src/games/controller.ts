@@ -182,8 +182,8 @@ export default class GameController {
 
       }
     }
-    game.save()
     io.emit('syncGame', {gameUpdate: game})
+    game.save()
 
     if(!game.winner){
       setTimeout(()=>{
