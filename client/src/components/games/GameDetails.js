@@ -22,18 +22,23 @@ class GameDetails extends PureComponent {
     const currentPlayerCoordinates = game[`coordinates_p${player}`]
     let updatedPlayerCoordinates = {...currentPlayerCoordinates}
     const p_num = `p${player}`
+    const otherPlayerCoordinates = player ===1 ? this.props.game.coordinates_p2 : this.props.game.coordinates_p1 
     switch (key) {
       case 'ArrowLeft':
         updatedPlayerCoordinates.X = currentPlayerCoordinates.X -1 < 0 ? 15 : currentPlayerCoordinates.X -1
+        if(currentPlayerCoordinates.Y === otherPlayerCoordinates.Y && updatedPlayerCoordinates.X === otherPlayerCoordinates.X) return 
         return this.props.updatePosition(p_num, updatedPlayerCoordinates, game.id)
       case 'ArrowUp':
         updatedPlayerCoordinates.Y = currentPlayerCoordinates.Y -1 < 0 ? 9 : currentPlayerCoordinates.Y -1
+        if(currentPlayerCoordinates.X === otherPlayerCoordinates.X && updatedPlayerCoordinates.Y === otherPlayerCoordinates.Y) return 
         return this.props.updatePosition(p_num, updatedPlayerCoordinates, game.id)
       case 'ArrowRight':
         updatedPlayerCoordinates.X = currentPlayerCoordinates.X + 1 > 15 ? 0 : currentPlayerCoordinates.X +1
+        if(currentPlayerCoordinates.Y === otherPlayerCoordinates.Y && updatedPlayerCoordinates.X === otherPlayerCoordinates.X) return 
         return this.props.updatePosition(p_num, updatedPlayerCoordinates, game.id)
       case 'ArrowDown':
         updatedPlayerCoordinates.Y = currentPlayerCoordinates.Y +1 > 9 ? 0 :  currentPlayerCoordinates.Y +1
+        if(currentPlayerCoordinates.Y === otherPlayerCoordinates.Y && updatedPlayerCoordinates.X === otherPlayerCoordinates.X) return 
         return this.props.updatePosition(p_num, updatedPlayerCoordinates, game.id)
       case 'w':
         return this.props.updatePosition(p_num, updatedPlayerCoordinates, game.id, 'up')
