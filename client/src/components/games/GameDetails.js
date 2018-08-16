@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react'
 import {connect} from 'react-redux'
 import {Redirect} from 'react-router-dom'
-import {getGames, joinGame, updateGame, syncGame, updatePosition} from '../../actions/games'
+import {getGames, joinGame, syncGame, updatePosition} from '../../actions/games'
 import {getUsers} from '../../actions/users'
 import {userId} from '../../jwt'
 import './GameDetails.scss'
@@ -18,39 +18,38 @@ class GameDetails extends PureComponent {
 
   joinGame = () => this.props.joinGame(this.props.game.id)
 
-  onKeyPressed = (key, player, game) => {
-    const currentPlayerCoordinates = game[`coordinates_p${player}`]
-    let updatedPlayerCoordinates = {...currentPlayerCoordinates}
+  onKeyDown = (key, player, game) => {
+    const lastKnownPlayerCoordinates = game[`coordinates_p${player}`]
+    let updatedPlayerCoordinates = {...lastKnownPlayerCoordinates}
     const p_num = `p${player}`
+    const otherPlayerCoordinates = player === 1 ? game.coordinates_p2 : game.coordinates_p1
+    const bumpPlayer = (updatedPlayerCoordinates) => updatedPlayerCoordinates.Y === otherPlayerCoordinates.Y && updatedPlayerCoordinates.X === otherPlayerCoordinates.X
+    const updatePosition = (coordinates, direction) => this.props.updatePosition(p_num, coordinates, game.id, direction)
     switch (key) {
       case 'ArrowLeft':
-        updatedPlayerCoordinates.X = currentPlayerCoordinates.X -1 < 0 ? 15 : currentPlayerCoordinates.X -1
-        this.props.updatePosition(p_num, updatedPlayerCoordinates, game.id)
-        break;
-      case 'ArrowUp':
-        updatedPlayerCoordinates.Y = currentPlayerCoordinates.Y -1 < 0 ? 9 : currentPlayerCoordinates.Y -1
-        this.props.updatePosition(p_num, updatedPlayerCoordinates, game.id)
-        break;
+        updatedPlayerCoordinates.X = lastKnownPlayerCoordinates.X -1 < 0 ? 15 : lastKnownPlayerCoordinates.X -1
+        if(bumpPlayer(updatedPlayerCoordinates)) return updatePosition(lastKnownPlayerCoordinates)
+        return updatePosition(updatedPlayerCoordinates)
       case 'ArrowRight':
-        updatedPlayerCoordinates.X = currentPlayerCoordinates.X + 1 > 15 ? 0 : currentPlayerCoordinates.X +1
-        this.props.updatePosition(p_num, updatedPlayerCoordinates, game.id)
-        break;
+        updatedPlayerCoordinates.X = lastKnownPlayerCoordinates.X + 1 > 15 ? 0 : lastKnownPlayerCoordinates.X +1
+        if(bumpPlayer(updatedPlayerCoordinates)) return updatePosition(lastKnownPlayerCoordinates)
+        return updatePosition(updatedPlayerCoordinates)
+      case 'ArrowUp':
+        updatedPlayerCoordinates.Y = lastKnownPlayerCoordinates.Y -1 < 0 ? 9 : lastKnownPlayerCoordinates.Y -1
+        if(bumpPlayer(updatedPlayerCoordinates)) return updatePosition(lastKnownPlayerCoordinates)
+        return updatePosition(updatedPlayerCoordinates)
       case 'ArrowDown':
-        updatedPlayerCoordinates.Y = currentPlayerCoordinates.Y +1 > 9 ? 0 :  currentPlayerCoordinates.Y +1
-        this.props.updatePosition(p_num, updatedPlayerCoordinates, game.id)
-        break;
+        updatedPlayerCoordinates.Y = lastKnownPlayerCoordinates.Y +1 > 9 ? 0 :  lastKnownPlayerCoordinates.Y +1
+        if(bumpPlayer(updatedPlayerCoordinates)) return updatePosition(lastKnownPlayerCoordinates)
+        return updatePosition(updatedPlayerCoordinates)
       case 'w':
-        this.props.updatePosition(p_num, updatedPlayerCoordinates, game.id, 'up')
-        break;
+        return updatePosition(updatedPlayerCoordinates, 'up')
       case 'a':
-        this.props.updatePosition(p_num, updatedPlayerCoordinates, game.id, 'left')
-        break;
+        return updatePosition(updatedPlayerCoordinates, 'left')
       case 's':
-        this.props.updatePosition(p_num, updatedPlayerCoordinates, game.id, 'down')
-        break;
+        return updatePosition(updatedPlayerCoordinates, 'down')
       case 'd':
-        this.props.updatePosition(p_num, updatedPlayerCoordinates, game.id, 'right')
-        break;
+        return updatePosition(updatedPlayerCoordinates, 'right')
       default:
         return updatedPlayerCoordinates
     }
@@ -106,7 +105,7 @@ class GameDetails extends PureComponent {
           coordinates_p2={game.coordinates_p2}
           beam_p1 = {game.beam_p1}
           beam_p2 = {game.beam_p2}
-          onKeyPressed={this.onKeyPressed}
+          onKeyDown={this.onKeyDown}
           game={game}/>
       }
 
@@ -124,7 +123,7 @@ const mapStateToProps = (state, props) => ({
 })
 
 const mapDispatchToProps = {
-  getGames, getUsers, joinGame, updateGame, syncGame, updatePosition
+  getGames, getUsers, joinGame, syncGame, updatePosition
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameDetails)

@@ -5,14 +5,26 @@ class BoardWrapper extends PureComponent {
   constructor(props) {
     super(props)
     this.state = {
-      handleKeyPress: (e) => this.props.onKeyPressed(e.key, this.props.playerNumber, this.props.game)
-    };
+      down: false,
+      keyInterval: (e) => {
+        if(this.state.down) return null
+        this.setState({down: true})
+        setTimeout(() => {
+          this.props.onKeyDown(e.key, this.props.playerNumber, this.props.game)
+          this.setState({down: false})
+        }, 150)
+        // this.props.onKeyDown(e.key, this.props.playerNumber, this.props.game)
+
+      }
+    }
   }
   componentDidMount() {
-    document.addEventListener('keydown', (e) => {this.state.handleKeyPress(e)}, true)
+    document.addEventListener('keydown', (e) => {this.state.keyInterval(e)}, false)
+    document.addEventListener('keyup', () => {this.setState({down: false})}, false)
   }
   componentWillUnmount() {
-    document.removeEventListener('keydown', (e) => {this.state.handleKeyPress(e)}, true)
+    document.removeEventListener('keydown', (e) => {this.state.keyInterval(e)}, false)
+    document.removeEventListener('keyup', () => {this.setState({down: false})}, false)
   }
 
   getBeamCells  (playerCoordinates, beamDirection)  {
@@ -46,7 +58,6 @@ class BoardWrapper extends PureComponent {
   render() {
     return (
       <Board
-        board={this.props.board}
         playerNumber={this.props.playerNumber}
         coordinates_p1={this.props.coordinates_p1}
         coordinates_p2={this.props.coordinates_p2}
