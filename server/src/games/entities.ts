@@ -9,8 +9,7 @@ export type XCoordinate = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 |
 export type YCoordinate = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 export type XYCoordinates = { X: XCoordinate,  Y: YCoordinate }
 export type Direction = 'up' | 'left' | 'down '| 'right'
-export type BeamCell = {coordinate: XYCoordinates, direction: Direction}
-export type Beam = null |  BeamCell
+export type Beam = null |  Direction
 
 
 type Status = 'pending' | 'started' | 'finished'
