@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react'
 import {connect} from 'react-redux'
 import {Redirect} from 'react-router-dom'
-import {getGames, joinGame, updateGame, syncGame, updatePosition} from '../../actions/games'
+import {getGames, joinGame, syncGame, updatePosition} from '../../actions/games'
 import {getUsers} from '../../actions/users'
 import {userId} from '../../jwt'
 import './GameDetails.css'
@@ -124,7 +124,7 @@ const mapStateToProps = (state, props) => ({
 })
 
 const mapDispatchToProps = {
-  getGames, getUsers, joinGame, updateGame, syncGame, updatePosition
+  getGames, getUsers, joinGame, syncGame, updatePosition
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameDetails)

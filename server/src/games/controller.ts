@@ -3,17 +3,15 @@ import {
   Body, Patch
 } from 'routing-controllers'
 import User from '../users/entity'
-import { Game, Player, Board, XYCoordinates } from './entities'
+import { Game, Player, XYCoordinates } from './entities'
 import {IsBoard, isValidTransition, calculateWinner, finished} from './logic'
 import { Validate } from 'class-validator'
 import {io} from '../index'
 
 class GameUpdate {
 
-  @Validate(IsBoard, {
-    message: 'Not a valid board'
-  })
-  board: Board
+  
+  // board: Board
   coordinates_p1: XYCoordinates
   coordinates_p2: XYCoordinates
 }
@@ -126,16 +124,16 @@ export default class GameController {
 
     if (!player) throw new ForbiddenError(`You are not part of this game`)
     if (game.status !== 'started') throw new BadRequestError(`The game is not started yet`)
-    if (!isValidTransition(player.player, game.board, update.board)) {
-      throw new BadRequestError(`Invalid move`)
-    }    
+    // if (!isValidTransition(player.player, null, null)) {
+    //   throw new BadRequestError(`Invalid move`)
+    // }    
 
-    const winner = calculateWinner(update.board)
+    const winner = calculateWinner(update)
     if (winner) {
       game.winner = winner
       game.status = 'finished'
     }
-    else if (finished(update.board)) {
+    else if (finished(update)) {
       game.status = 'finished'
     }
     // game.board = update.board
@@ -163,10 +161,21 @@ export default class GameController {
     const shootingPlayer  = coordinatesUpdate.player
     
     if (!game) throw new NotFoundError(`Game does not exist`)
+
+    if(!coordinatesUpdate.beamDirection){
+      shootingPlayer === 'p1' ? game.coordinates_p1 = coordinatesUpdate.coordinates : game.coordinates_p2 = coordinatesUpdate.coordinates
+      game.beam_p1 = null
+      game.beam_p2 = null
+      io.emit('syncGame', {gameUpdate: game})
+      game.save()
+      return game
+    }
+
   
     if (shootingPlayer === 'p1'){
-      game.coordinates_p1 = coordinatesUpdate.coordinates
       game.beam_p1 = coordinatesUpdate.beamDirection
+      // game.beam_p2 = null
+      game.coordinates_p1 = coordinatesUpdate.coordinates
       if(checkIfShot(coordinatesUpdate.coordinates, game.coordinates_p2, coordinatesUpdate.beamDirection ))
       {
         game.winner = 1
@@ -175,23 +184,16 @@ export default class GameController {
     }
     if(shootingPlayer === 'p2'){
       game.coordinates_p2 = coordinatesUpdate.coordinates
+      // game.beam_p1 = null
       game.beam_p2 = coordinatesUpdate.beamDirection
       if(checkIfShot(coordinatesUpdate.coordinates, game.coordinates_p1, coordinatesUpdate.beamDirection )){
         game.winner = 2
         game.status = 'finished'
-
       }
     }
     io.emit('syncGame', {gameUpdate: game})
     game.save()
-
-    if(!game.winner){
-      setTimeout(()=>{
-            shootingPlayer === 'p1' ? game.beam_p1 = null : game.beam_p2 = null;
-            game.save()
-            // io.emit('syncGame', {gameUpdate: game})
-          }, 1000)
-    }
+    
     return game
   }
 
