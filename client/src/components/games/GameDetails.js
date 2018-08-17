@@ -18,41 +18,43 @@ class GameDetails extends Component {
 
   joinGame = () => this.props.joinGame(this.props.game.id)
 
-  onKeyDown = (key, player, game) => {
+  onKeyDown = (keys, player, game) => {
     const lastKnownPlayerCoordinates = game[`coordinates_p${player}`]
     let updatedPlayerCoordinates = {...lastKnownPlayerCoordinates}
     const p_num = `p${player}`
     const otherPlayerCoordinates = player === 1 ? game.coordinates_p2 : game.coordinates_p1
     const bumpPlayer = (updatedPlayerCoordinates) => updatedPlayerCoordinates.Y === otherPlayerCoordinates.Y && updatedPlayerCoordinates.X === otherPlayerCoordinates.X
     const updatePosition = (coordinates, direction) => this.props.updatePosition(p_num, coordinates, game.id, direction)
-    switch (key) {
-      case 'ArrowLeft':
-        updatedPlayerCoordinates.X = lastKnownPlayerCoordinates.X -1 < 0 ? 15 : lastKnownPlayerCoordinates.X -1
-        if(bumpPlayer(updatedPlayerCoordinates)) return updatePosition(lastKnownPlayerCoordinates)
-        return updatePosition(updatedPlayerCoordinates)
-      case 'ArrowRight':
-        updatedPlayerCoordinates.X = lastKnownPlayerCoordinates.X + 1 > 15 ? 0 : lastKnownPlayerCoordinates.X +1
-        if(bumpPlayer(updatedPlayerCoordinates)) return updatePosition(lastKnownPlayerCoordinates)
-        return updatePosition(updatedPlayerCoordinates)
-      case 'ArrowUp':
-        updatedPlayerCoordinates.Y = lastKnownPlayerCoordinates.Y -1 < 0 ? 9 : lastKnownPlayerCoordinates.Y -1
-        if(bumpPlayer(updatedPlayerCoordinates)) return updatePosition(lastKnownPlayerCoordinates)
-        return updatePosition(updatedPlayerCoordinates)
-      case 'ArrowDown':
-        updatedPlayerCoordinates.Y = lastKnownPlayerCoordinates.Y +1 > 9 ? 0 :  lastKnownPlayerCoordinates.Y +1
-        if(bumpPlayer(updatedPlayerCoordinates)) return updatePosition(lastKnownPlayerCoordinates)
-        return updatePosition(updatedPlayerCoordinates)
-      case 'w':
-        return updatePosition(updatedPlayerCoordinates, 'up')
-      case 'a':
-        return updatePosition(updatedPlayerCoordinates, 'left')
-      case 's':
-        return updatePosition(updatedPlayerCoordinates, 'down')
-      case 'd':
-        return updatePosition(updatedPlayerCoordinates, 'right')
-      default:
-        return updatedPlayerCoordinates
-    }
+    keys.forEach(key => {
+      switch (key) {
+        case 'ArrowLeft':
+          updatedPlayerCoordinates.X = lastKnownPlayerCoordinates.X - 1 < 0 ? 15 : lastKnownPlayerCoordinates.X - 1
+          if (bumpPlayer(updatedPlayerCoordinates)) return updatePosition(lastKnownPlayerCoordinates)
+          return updatePosition(updatedPlayerCoordinates)
+        case 'ArrowRight':
+          updatedPlayerCoordinates.X = lastKnownPlayerCoordinates.X + 1 > 15 ? 0 : lastKnownPlayerCoordinates.X + 1
+          if (bumpPlayer(updatedPlayerCoordinates)) return updatePosition(lastKnownPlayerCoordinates)
+          return updatePosition(updatedPlayerCoordinates)
+        case 'ArrowUp':
+          updatedPlayerCoordinates.Y = lastKnownPlayerCoordinates.Y - 1 < 0 ? 9 : lastKnownPlayerCoordinates.Y - 1
+          if (bumpPlayer(updatedPlayerCoordinates)) return updatePosition(lastKnownPlayerCoordinates)
+          return updatePosition(updatedPlayerCoordinates)
+        case 'ArrowDown':
+          updatedPlayerCoordinates.Y = lastKnownPlayerCoordinates.Y + 1 > 9 ? 0 : lastKnownPlayerCoordinates.Y + 1
+          if (bumpPlayer(updatedPlayerCoordinates)) return updatePosition(lastKnownPlayerCoordinates)
+          return updatePosition(updatedPlayerCoordinates)
+        case 'w':
+          return updatePosition(updatedPlayerCoordinates, 'up')
+        case 'a':
+          return updatePosition(updatedPlayerCoordinates, 'left')
+        case 's':
+          return updatePosition(updatedPlayerCoordinates, 'down')
+        case 'd':
+          return updatePosition(updatedPlayerCoordinates, 'right')
+        default:
+          return updatedPlayerCoordinates
+      }
+    })
   }
 
 
