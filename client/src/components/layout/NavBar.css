@@ -1,0 +1,28 @@
+@import url("https://fonts.googleapis.com/css?family=Press+Start+2P");
+@keyframes typing {
+  from {
+    width: 0; }
+  to {
+    width: 100%; } }
+
+#NavBar {
+  padding: 0 1em 0 1em;
+  height: 10vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #33ff00;
+  color: #000000;
+  z-index: 1; }
+  #NavBar h1 {
+    font-size: 1.5em;
+    display: inline-block; }
+  #NavBar .NavBar-Options {
+    font-size: 0.75em;
+    width: 40%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center; }
+    #NavBar .NavBar-Options .NavBar-Options-username {
+      color: #ffb000; }

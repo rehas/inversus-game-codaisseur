@@ -1,13 +1,10 @@
 import React, {PureComponent} from 'react'
-import {getGames, createGame} from '../../actions/games'
+import {getGames, createGame, joinGame} from '../../actions/games'
 import {getUsers} from '../../actions/users'
 import {connect} from 'react-redux'
 import {Redirect} from 'react-router-dom'
-import Button from 'material-ui/Button'
-import Paper from 'material-ui/Paper'
-import Card, { CardActions, CardContent } from 'material-ui/Card'
-import Typography from 'material-ui/Typography'
 import './GamesList.css'
+import {userId} from '../../jwt'
 
 class GamesList extends PureComponent {
   componentWillMount() {
@@ -17,68 +14,94 @@ class GamesList extends PureComponent {
     }
   }
 
-  renderGame = (game) => {
-    const {users, history} = this.props
 
-    return (<Card key={game.id} className="game-card">
-      <CardContent>
-        <Typography color="textSecondary">
-          This game is played by&nbsp;
+  renderGame = (game) => {
+    const {users, history, userId} = this.props
+
+    const joinGame = () => {
+      this.props.joinGame(game.id)
+      goToGame()
+    }
+    const goToGame = () => {history.push(`/games/${game.id}`)}
+
+    const winnerId = game.players
+      .filter(p => p.player === parseInt(game.winner))
+      .map(p => p.userId)[0]
+
+    const winnerName = Object.keys(users)
+      .map(u => {if (users[u].id === winnerId) return users[u].username})
+      .filter(n => n !== undefined)[0]
+
+    return (<div key={game.id} className="game-card">
+      <div>
+        <h2>Game #{game.id}</h2>
+          <div>
+            <p>This game is being played by: <br/>
+              {
+                game.players
+                  .map(player => users[player.userId].username)
+                  .join(' and ')
+              }
+            </p>
           {
-            game.players
-              .map(player => users[player.userId].firstName)
-              .join(' and ')
+            game.status === 'pending' && (
+            <div>
+              <p className={'status'}>Status: Waiting for Player 2...</p>
+              {game.players.map(p => (p.userId === userId) ? <button onClick={()=> goToGame()}>Return to Game!</button> : <button onClick={() => joinGame()}>I'll be Player 2!</button>)}
+            </div>
+            )
           }
-        </Typography>
-        <Typography variant="headline" component="h2">
-          Game #{game.id}
-        </Typography>
-        <Typography color="textSecondary">
-          Status: {game.status}
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Button
-          size="small"
-          onClick={() => history.push(`/games/${game.id}`)}
-        >
-          Watch
-        </Button>
-      </CardActions>
-    </Card>)
+          {
+            game.status === 'started' &&
+          <div>
+            <p className={'status'}>Status: In progress</p>
+            {game.players.map(p => (p.userId === userId) ? <button onClick={()=> goToGame()} >Return to Game!</button> : null)}
+          </div>
+            }
+          {
+            game.status === 'finished' &&
+            <p className={'status'}>Status: Finished
+              <br/>
+              <span className={'winner'}>{winnerName} was the winner! </span>
+            </p>
+          }
+          </div>
+      </div>
+    </div>)
   }
 
   render() {
-    const {games, users, authenticated, createGame} = this.props
-
+    const {games, users, authenticated, createGame, history} = this.props
+    const newGame = () => {
+      createGame()
+      const gameIds = games.map(game => parseInt(game.id))
+      const gameId = Math.max(...gameIds)
+      history.push(`/games/${gameId}`)
+    }
     if (!authenticated) return (
 			<Redirect to="/login" />
 		)
 
     if (games === null || users === null) return null
 
-    return (<Paper className="outer-paper">
-      <Button
-        color="primary"
-        variant="raised"
-        onClick={createGame}
-        className="create-game"
-      >
+    return (<div className="game-list">
+      <button onClick={newGame} className={"game-list-create-game-button"}>
         Create Game
-      </Button>
+      </button>
 
       <div>
         {games.map(game => this.renderGame(game))}
       </div>
-    </Paper>)
+    </div>)
   }
 }
 
 const mapStateToProps = state => ({
   authenticated: state.currentUser !== null,
   users: state.users === null ? null : state.users,
+  userId: state.currentUser && userId(state.currentUser.jwt),
   games: state.games === null ?
     null : Object.values(state.games).sort((a, b) => b.id - a.id)
 })
 
-export default connect(mapStateToProps, {getGames, getUsers, createGame})(GamesList)
+export default connect(mapStateToProps, {getGames, getUsers, createGame, joinGame})(GamesList)

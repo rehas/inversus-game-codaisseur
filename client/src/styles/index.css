@@ -1,0 +1,59 @@
+@import url("https://fonts.googleapis.com/css?family=Press+Start+2P");
+@keyframes typing {
+  from {
+    width: 0; }
+  to {
+    width: 100%; } }
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Press Start 2P", cursive;
+  background-color: #000000;
+  color: #33ff00;
+  /* TEXT SELECTION OFF */
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Safari */
+  -khtml-user-select: none;
+  /* Konqueror HTML */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
+  /* Non-prefixed version, currently supported by Chrome and Opera */ }
+  body input {
+    margin: 1em;
+    background-color: #33ff00;
+    border-style: none;
+    color: #000000;
+    padding: 0.25em;
+    font-family: "Press Start 2P", cursive; }
+  body input:-webkit-autofill, body textarea:-webkit-autofill, body select:-webkit-autofill {
+    background-color: #33ff00 !important; }
+  body input:-webkit-autofill,
+  body input:-webkit-autofill:hover,
+  body input:-webkit-autofill:focus,
+  body input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s; }
+  body button {
+    border: #33ff00 1px solid;
+    border-radius: 6px;
+    padding: 1em;
+    background-color: #000000;
+    color: #33ff00;
+    font-family: "Press Start 2P", cursive; }
+    body button:hover {
+      background-color: #33ff00;
+      color: #000000; }
+  body a,
+  body a:visited {
+    padding: 1em;
+    border-radius: 6px;
+    text-decoration: none;
+    color: inherit; }
+  body a:hover {
+    background-color: #000000;
+    color: #33ff00; }

@@ -1,0 +1,63 @@
+@import "./references.scss";
+body {
+
+  margin: 0;
+  padding: 0;
+  font-family: $font-stack;
+  background-color: $black;
+  color: $game-green;
+  input {
+    margin: 1em;
+    background-color: $game-green;
+    border-style: none;
+    color: $black;
+    padding: 0.25em;
+    font-family: $font-stack;
+  }
+
+  input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill{
+    background-color: $game-green !important;
+  }
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+  }
+
+  button {
+    border: $game-green 1px solid;
+    border-radius: 6px;
+    padding: 1em;
+    background-color: $black;
+    color: $game-green;
+    font-family: $font-stack;
+    &:hover {
+      background-color: $game-green;
+      color: $black;
+    }
+  }
+
+  a,
+  a:visited {
+    padding: 1em;
+    border-radius: 6px;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  a:hover {
+    background-color: $black;
+    color: $game-green;
+  }
+
+
+  /* TEXT SELECTION OFF */
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+}

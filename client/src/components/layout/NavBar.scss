@@ -1,0 +1,29 @@
+@import '../../styles/references.scss';
+
+#NavBar{
+  padding: 0 1em 0 1em;
+  //margin: auto;
+  height: 10vh;
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: $game-green;
+  color: $black;
+  z-index: 1;
+  h1 {
+    font-size: 1.5em;
+    display: inline-block;
+  }
+  .NavBar-Options {
+    font-size:0.75em;
+    width: 40%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .NavBar-Options-username {
+      color: $orange;
+    }
+  }
+
+}

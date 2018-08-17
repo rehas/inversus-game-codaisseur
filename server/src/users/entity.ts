@@ -1,6 +1,6 @@
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm'
 import { Exclude } from 'class-transformer';
-import { MinLength, IsString, IsEmail } from 'class-validator';
+import { MinLength, IsString } from 'class-validator';
 import * as bcrypt from 'bcrypt'
 import { Player } from '../games/entities';
 
@@ -13,16 +13,7 @@ export default class User extends BaseEntity {
   @IsString()
   @MinLength(2)
   @Column('text')
-  firstName: string
-
-  @IsString()
-  @MinLength(2)
-  @Column('text')
-  lastName: string
-
-  @IsEmail()
-  @Column('text')
-  email: string
+  username: string
 
   @IsString()
   @MinLength(8)

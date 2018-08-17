@@ -3,28 +3,32 @@ import Board from './Board'
 
 class BoardWrapper extends PureComponent {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       down: false,
+      keysPressed: [],
       keyInterval: (e) => {
         if(this.state.down) return null
         this.setState({down: true})
+        if (!this.state.keysPressed.includes(e.key)) this.setState({...this.state, keysPressed: [...this.state.keysPressed, e.key]})
         setTimeout(() => {
-          this.props.onKeyDown(e.key, this.props.playerNumber, this.props.game)
-          this.setState({down: false})
+          this.props.onKeyDown(this.state.keysPressed, this.props.player, this.props.game)
+          this.setState({...this.state, down: false})
         }, 150)
-        // this.props.onKeyDown(e.key, this.props.playerNumber, this.props.game)
-
+      },
+      onKeyUp: (e) => {
+        const newKeysPressed = [...this.state.keysPressed].filter(key => key !== e.key)
+        this.setState({down: false, keysPressed: newKeysPressed})
       }
     }
   }
   componentDidMount() {
     document.addEventListener('keydown', (e) => {this.state.keyInterval(e)}, false)
-    document.addEventListener('keyup', () => {this.setState({down: false})}, false)
+    document.addEventListener('keyup', (e) => {this.state.onKeyUp(e)}, false)
   }
   componentWillUnmount() {
     document.removeEventListener('keydown', (e) => {this.state.keyInterval(e)}, false)
-    document.removeEventListener('keyup', () => {this.setState({down: false})}, false)
+    document.removeEventListener('keyup', (e) => {this.state.onKeyUp(e)}, false)
   }
 
   getBeamCells  (playerCoordinates, beamDirection)  {
@@ -58,7 +62,7 @@ class BoardWrapper extends PureComponent {
   render() {
     return (
       <Board
-        playerNumber={this.props.playerNumber}
+        player={this.props.player}
         coordinates_p1={this.props.coordinates_p1}
         coordinates_p2={this.props.coordinates_p2}
         beam_p1={this.getBeamCells(this.props.coordinates_p1, this.props.beam_p1)}

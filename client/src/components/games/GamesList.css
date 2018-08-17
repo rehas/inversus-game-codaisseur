@@ -1,19 +1,34 @@
-h2 {
-  margin-bottom: 16px;
-  font-size: 14px;
-}
+@import url("https://fonts.googleapis.com/css?family=Press+Start+2P");
+@keyframes typing {
+  from {
+    width: 0; }
+  to {
+    width: 100%; } }
 
-.game-card {
-  margin: 10px 10px 10px 0px;
-}
-
-.create-game {
-  margin-top: 10px !important;
-}
-
-.outer-paper {
+.game-list {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
   margin: auto;
-  margin-top: 20px;
   padding: 20px;
-  width: 60%;
-}
+  width: 80%; }
+  .game-list p {
+    line-height: 1.5em;
+    margin: 1.5em; }
+  .game-list .game-card {
+    border: #33ff00 1px solid;
+    border-radius: 1em;
+    padding: 2em;
+    margin-top: 1em; }
+    .game-list .game-card .winner {
+      color: #ffffff; }
+    .game-list .game-card .status {
+      color: #ffb000; }
+    .game-list .game-cardh2 {
+      margin-bottom: 1em;
+      font-size: 1.5em; }
+    .game-list .game-card button {
+      margin-left: 70%; }
+  .game-list .game-list-create-game-button {
+    font-size: 2em;
+    margin-top: 10px !important; }

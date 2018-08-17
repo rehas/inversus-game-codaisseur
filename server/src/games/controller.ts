@@ -4,47 +4,24 @@ import {
 } from 'routing-controllers'
 import User from '../users/entity'
 import { Game, Player, XYCoordinates } from './entities'
-import {IsBoard, isValidTransition, calculateWinner, finished} from './logic'
-import { Validate } from 'class-validator'
+import {calculateWinner, finished} from './logic'
 import {io} from '../index'
 
 class GameUpdate {
-
-  
-  // board: Board
   coordinates_p1: XYCoordinates
   coordinates_p2: XYCoordinates
 }
 
 const checkIfShot = function(shootingPlayerCoordinates, targetPlayerCoordinates, beamDirection  ){
-  // console.log(shootingPlayerCoordinates, targetPlayerCoordinates, beamDirection)
   switch (beamDirection) {
     case 'left':
-      if( shootingPlayerCoordinates.Y === targetPlayerCoordinates.Y  && shootingPlayerCoordinates.X > targetPlayerCoordinates.X){
-        // console.log("someOne got shot")
-        // console.log(targetPlayerCoordinates)
-        return true
-      }else{
-        return false
-      }
+      return !!(shootingPlayerCoordinates.Y === targetPlayerCoordinates.Y && shootingPlayerCoordinates.X > targetPlayerCoordinates.X);
     case 'right':
-      if(shootingPlayerCoordinates.Y === targetPlayerCoordinates.Y  && shootingPlayerCoordinates.X < targetPlayerCoordinates.X){
-        return true
-      }
-      return false
-    
+      return !!(shootingPlayerCoordinates.Y === targetPlayerCoordinates.Y && shootingPlayerCoordinates.X < targetPlayerCoordinates.X);
     case 'up':
-      if(shootingPlayerCoordinates.X === targetPlayerCoordinates.X  && shootingPlayerCoordinates.Y > targetPlayerCoordinates.Y){
-        return true
-      }
-      return false
-
+      return !!(shootingPlayerCoordinates.X === targetPlayerCoordinates.X && shootingPlayerCoordinates.Y > targetPlayerCoordinates.Y);
     case 'down':
-      if(shootingPlayerCoordinates.X === targetPlayerCoordinates.X  && shootingPlayerCoordinates.Y < targetPlayerCoordinates.Y){
-        return true
-      }
-      return false
-  
+      return !!(shootingPlayerCoordinates.X === targetPlayerCoordinates.X && shootingPlayerCoordinates.Y < targetPlayerCoordinates.Y);
     default:
       return false
   }

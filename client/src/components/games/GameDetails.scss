@@ -1,0 +1,22 @@
+@import './../../styles/references.scss';
+
+.GameDetail-div {
+  text-align: center;
+  margin: -2vh 0 0 0;
+  width: 100vw;
+  height: 90vh;
+
+  .GameDetail-div-result,
+  .GameDetail-div-waiting
+  {
+    height:60vh;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin: auto;
+    justify-content: space-evenly;
+    @include typewriter;
+  }
+
+}
+

@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
+
+$font-stack: 'Press Start 2P', cursive;
+$game-green: #33ff00;
+$white: #ffffff;
+$black: #000000;
+$orange: #ffb000;
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@mixin typewriter {
+  overflow: hidden;
+  white-space: nowrap;
+  animation:
+          typing 3.5s steps(40, end)
+}

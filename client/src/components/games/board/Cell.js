@@ -1,7 +1,7 @@
 import React from 'react'
 import './Board.css'
 
-const renderCellVisuals = (coordinates_p1, coordinates_p2, beam_p1, beam_p2, cellIndex, rowIndex) => {
+const renderCellVisuals = (coordinates_p1, coordinates_p2, beam_p1, beam_p2, cellIndex, rowIndex, player) => {
   if (coordinates_p1.X === cellIndex && coordinates_p1.Y === rowIndex){
     return <div className={`board-cell-player1`}></div>
   } else if (coordinates_p2.X === cellIndex && coordinates_p2.Y === rowIndex) {
@@ -13,13 +13,13 @@ const renderCellVisuals = (coordinates_p1, coordinates_p2, beam_p1, beam_p2, cel
   } else return null
 }
 
-export default ({playerNumber, coordinates_p1, coordinates_p2, beam_p1, beam_p2, rowIndex, cellIndex}) => {
+export default ({player, coordinates_p1, coordinates_p2, beam_p1, beam_p2, rowIndex, cellIndex}) => {
   return (
     <div
       className={`board-cell`}
       key={`${rowIndex}-${cellIndex}`}
     >
-      { renderCellVisuals(coordinates_p1, coordinates_p2, beam_p1, beam_p2, cellIndex, rowIndex, playerNumber) }
+      { renderCellVisuals(coordinates_p1, coordinates_p2, beam_p1, beam_p2, cellIndex, rowIndex, player) }
     </div>
   )
 }
