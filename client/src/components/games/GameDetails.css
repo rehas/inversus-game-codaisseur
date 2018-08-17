@@ -7,7 +7,7 @@
 
 .GameDetail-div {
   text-align: center;
-  margin: 2vh 0 0 0;
+  margin: -2vh 0 0 0;
   width: 100vw;
   height: 90vh; }
   .GameDetail-div .GameDetail-div-result,

@@ -71,25 +71,16 @@ class GameDetails extends Component {
     if (!game) return 'Not found'
 
     const player = game.players.find(p => p.userId === userId)
-    const winner = game.players
-      .filter(p => p.symbol === game.winner)
-      .map(p => p.userId)[0]
 
-//     const renderPending = () => {
-//       if (game.players.map(p => p.userId).indexOf(userId) === 0)) {
-//         return (<div className={'GameDetail-div-waiting'}><h2>Waiting for Player 2...</h2></div>)
-// }
-//     }
     return (<div className="GameDetail-div"  tabIndex="0">
       <h1>Game #{game.id}</h1>
 
       <p>Status: {game.status}</p>
 
       {
-        console.log(game) &&
         game.status === 'started' &&
         player &&
-        {/*<div>You're Player {player}!</div>*/}
+        <div>You're Player {player.player}!</div>
       }
 
 
@@ -117,7 +108,7 @@ class GameDetails extends Component {
       {
         game.status === 'finished' &&
         <div className={'GameDetail-div-result'}>
-          {game.winner == player ? <h1>You won!</h1> : <h1>You lost!</h1>}
+          {parseInt(game.winner) === player.player ? <h1>You won!</h1> : <h1>You lost!</h1>}
         </div>
       }
     </div>)

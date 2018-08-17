@@ -20,8 +20,15 @@ class GamesList extends PureComponent {
 
     const joinGame = () => {
       this.props.joinGame(game.id)
-      history.push(`/games/${game.id}`)
+      goToGame()
     }
+    const goToGame = () => {history.push(`/games/${game.id}`)}
+
+    const winnerId = game.players
+      .filter(p => p.player === parseInt(game.winner))
+      .map(p => p.userId)[0]
+
+    const winnerName = Object.keys(users).map(u=> u.id === parseInt(winnerId))
 
     return (<div key={game.id} className="game-card">
       <div>
@@ -38,12 +45,17 @@ class GamesList extends PureComponent {
         {game.status === 'pending' && (
           <div>
             <p>Status: Waiting for Player 2...</p>
-            {game.players.filter(player => player.userId === userId ) ? <button onClick={joinGame}>I'll be Player 2!</button> : null}
+            {game.players.map(p => (p.userId === userId) ? <button onClick={()=> goToGame()} >Return to Game!</button> : <button onClick={() => joinGame()}>I'll be Player 2!</button>)}
           </div>
           )
         }
-        {game.status === 'started' && <p>Status: In progress</p>}
-        {game.status === 'finished' && <p>Status: Finished <br/> Player {game.winner} was the winner! </p>}
+        {game.status === 'started' &&
+        <div>
+          <p>Status: In progress</p>
+          {game.players.map(p => (p.userId === userId) ? <button onClick={()=> goToGame()} >Return to Game!</button> : null)}
+        </div>
+          }
+        {game.status === 'finished' && <p>Status: Finished <br/> Player {console.log(winnerName)} was the winner! </p>}
 
 
           </div>
@@ -55,7 +67,7 @@ class GamesList extends PureComponent {
     const {games, users, authenticated, createGame, history} = this.props
     const newGame = () => {
       createGame()
-      const gameIds = Object.keys(games).map(gameId => parseInt(gameId))
+      const gameIds = games.map(game => parseInt(game.id))
       const gameId = Math.max(...gameIds)
       history.push(`/games/${gameId}`)
     }
