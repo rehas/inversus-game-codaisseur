@@ -75,7 +75,7 @@ class GamesList extends PureComponent {
     const newGame = () => {
       createGame()
       const gameIds = games.map(game => parseInt(game.id))
-      const gameId = Math.max(...gameIds)
+      const gameId = Math.max(...gameIds) + 1
       history.push(`/games/${gameId}`)
     }
     if (!authenticated) return (
