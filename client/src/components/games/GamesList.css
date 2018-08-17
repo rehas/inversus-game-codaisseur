@@ -32,3 +32,9 @@
   .game-list .game-list-create-game-button {
     font-size: 2em;
     margin-top: 10px !important; }
+  .game-list button,
+  .game-list .game-list-create-game-button {
+    background-color: rgba(0, 0, 0, 0.25); }
+    .game-list button:hover,
+    .game-list .game-list-create-game-button:hover {
+      background-color: #33ff00; }
