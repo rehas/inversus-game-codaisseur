@@ -18,5 +18,8 @@
     @include typewriter;
   }
 
+  hr {
+    border: 0.5px solid $orange;
+  }
 }
 
