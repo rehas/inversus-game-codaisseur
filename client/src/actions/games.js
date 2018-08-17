@@ -50,8 +50,11 @@ const updateGameSuccess = () => ({
   type: UPDATE_GAME_SUCCESS
 })
 
-const joinGameSuccess = () => ({
-  type: JOIN_GAME_SUCCESS
+//Make sure nothing breaks down, if so make another action dispatcher to set currentGame to null on gameOver, 
+
+const joinGameSuccess = (gameId) => ({
+  type: JOIN_GAME_SUCCESS,
+  payload: gameId
 })
 
 
@@ -78,7 +81,7 @@ export const joinGame = (gameId) => (dispatch, getState) => {
   request
     .post(`${baseUrl}/games/${gameId}/players`)
     .set('Authorization', `Bearer ${jwt}`)
-    .then(_ => dispatch(joinGameSuccess()))
+    .then(_ => dispatch(joinGameSuccess(gameId)))
     .catch(err => console.error(err))
 }
 
