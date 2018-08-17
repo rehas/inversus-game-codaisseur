@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react'
+import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Redirect} from 'react-router-dom'
 import {getGames, joinGame, syncGame, updatePosition} from '../../actions/games'
@@ -7,7 +7,7 @@ import {userId} from '../../jwt'
 import './GameDetails.css'
 import BoardWrapper from './board/BoardWrapper'
 
-class GameDetails extends PureComponent {
+class GameDetails extends Component {
 
   componentWillMount() {
     if (this.props.authenticated) {
@@ -73,6 +73,11 @@ class GameDetails extends PureComponent {
       .filter(p => p.symbol === game.winner)
       .map(p => p.userId)[0]
 
+//     const renderPending = () => {
+//       if (game.players.map(p => p.userId).indexOf(userId) === 0)) {
+//         return (<div className={'GameDetail-div-waiting'}><h2>Waiting for Player 2...</h2></div>)
+// }
+//     }
     return (<div className="GameDetail-div"  tabIndex="0">
       <h1>Game #{game.id}</h1>
 
@@ -81,7 +86,7 @@ class GameDetails extends PureComponent {
       {
         game.status === 'started' &&
         player &&
-        <div>You're Player {player}!</div>
+        {/*<div>You're Player {player}!</div>*/}
       }
 
 
@@ -90,15 +95,14 @@ class GameDetails extends PureComponent {
       {
         game.status === 'pending' &&
         <div className={'GameDetail-div-pending'}>
-          {(game.players.map(p => p.userId).indexOf(userId) === -1) ? <button onClick={this.joinGame}>Join Game</button> : null}
-          {(game.players.map(p => p.userId).indexOf(userId) === 0) ? <div className={'GameDetail-div-waiting'}><h2>Waiting for Player 2...</h2></div> : null}
+          {game.players.map(p => p.userId === userId) ?  <div className={'GameDetail-div-waiting'}><h2>Waiting for Player 2...</h2></div> : <button onClick={this.joinGame}>Join Game</button>}
         </div>
       }
 
       {
         game.status === 'started' &&
         <BoardWrapper
-          playerNumber={player.player}
+          playerNumber={player}
           coordinates_p1={game.coordinates_p1}
           coordinates_p2={game.coordinates_p2}
           beam_p1 = {game.beam_p1}
@@ -110,7 +114,7 @@ class GameDetails extends PureComponent {
       {
         game.status === 'finished' &&
         <div className={'GameDetail-div-result'}>
-          { parseInt(game.winner) === player ? <h1>You won!</h1> : <h1>You lost!</h1>}
+          {game.winner == player ? <h1>You won!</h1> : <h1>You lost!</h1>}
         </div>
       }
     </div>)

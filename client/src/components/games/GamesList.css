@@ -1,4 +1,10 @@
 @import url("https://fonts.googleapis.com/css?family=Press+Start+2P");
+@keyframes typing {
+  from {
+    width: 0; }
+  to {
+    width: 100%; } }
+
 .game-list {
   display: flex;
   justify-content: center;

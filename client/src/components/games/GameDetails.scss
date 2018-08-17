@@ -1,14 +1,4 @@
-@keyframes typing {
-  from { width: 0 }
-  to { width: 100% }
-}
-
-@mixin typewriter {
-  overflow: hidden;
-  white-space: nowrap;
-  animation:
-    typing 3.5s steps(40, end)
-}
+@import './../../styles/references.scss';
 
 .GameDetail-div {
   text-align: center;

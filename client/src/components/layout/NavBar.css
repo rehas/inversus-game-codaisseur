@@ -1,4 +1,10 @@
 @import url("https://fonts.googleapis.com/css?family=Press+Start+2P");
+@keyframes typing {
+  from {
+    width: 0; }
+  to {
+    width: 100%; } }
+
 #NavBar {
   padding: 0 1em 0 1em;
   height: 10vh;

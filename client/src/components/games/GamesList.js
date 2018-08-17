@@ -4,6 +4,7 @@ import {getUsers} from '../../actions/users'
 import {connect} from 'react-redux'
 import {Redirect} from 'react-router-dom'
 import './GamesList.css'
+import {userId} from '../../jwt'
 
 class GamesList extends PureComponent {
   componentWillMount() {
@@ -15,7 +16,7 @@ class GamesList extends PureComponent {
 
 
   renderGame = (game) => {
-    const {users, history} = this.props
+    const {users, history, userId} = this.props
 
     const joinGame = () => {
       this.props.joinGame(game.id)
@@ -37,7 +38,7 @@ class GamesList extends PureComponent {
         {game.status === 'pending' && (
           <div>
             <p>Status: Waiting for Player 2...</p>
-            <button onClick={joinGame}>I'm Player 2!</button>
+            {game.players.filter(player => player.userId === userId ) ? <button onClick={joinGame}>I'll be Player 2!</button> : null}
           </div>
           )
         }
@@ -79,6 +80,7 @@ class GamesList extends PureComponent {
 const mapStateToProps = state => ({
   authenticated: state.currentUser !== null,
   users: state.users === null ? null : state.users,
+  userId: state.currentUser && userId(state.currentUser.jwt),
   games: state.games === null ?
     null : Object.values(state.games).sort((a, b) => b.id - a.id)
 })
