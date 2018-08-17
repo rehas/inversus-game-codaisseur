@@ -11,22 +11,25 @@
 }
 
 .board {
-  border: 2px solid #000000;
+  border: 2px solid rgba(255, 255, 255, 0.25);
   width: 800px;
   height: 500px;
   margin: auto;
 }
+
 .board-row {
   margin: 0 0 -4px 0;
 
 }
+
 .board-cell {
   box-sizing: border-box;
   display: inline-block;
   margin: 0 -1px 3px 0;
   height: 51px;
   width: 51px;
-  border: 1px solid #c3c3c3;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(0,0,0, 0.5);
 }
 
 p {
@@ -40,11 +43,11 @@ p {
 }
 
 .board-cell-player1 {
-  background: url("../../assets/WhiteTeam.jpg") -21px -16px;
+  background: url("../../assets/austin.png");
 }
 
 .board-cell-player2 {
-  background: url("../../assets/BlackTeam.jpg") -90px -16px;
+  background: url("../../assets/drevil.png");
 }
 
 .beam-cell-laser-direction-up,

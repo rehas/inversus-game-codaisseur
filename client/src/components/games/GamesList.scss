@@ -36,9 +36,16 @@
       margin-left: 70%;
     }
   }
-
   .game-list-create-game-button {
     font-size: 2em;
     margin-top: 10px !important;
+  }
+
+  button,
+  .game-list-create-game-button {
+    background-color: rgba(0,0,0, 0.25);
+    &:hover {
+      background-color: $game-green;
+    }
   }
 }
