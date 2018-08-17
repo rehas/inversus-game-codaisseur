@@ -86,6 +86,7 @@ class GameDetails extends Component {
       <p>Status: {game.status}</p>
 
       {
+        console.log(game) &&
         game.status === 'started' &&
         player &&
         {/*<div>You're Player {player}!</div>*/}
@@ -104,7 +105,7 @@ class GameDetails extends Component {
       {
         game.status === 'started' &&
         <BoardWrapper
-          playerNumber={player}
+          player={player.player}
           coordinates_p1={game.coordinates_p1}
           coordinates_p2={game.coordinates_p2}
           beam_p1 = {game.beam_p1}

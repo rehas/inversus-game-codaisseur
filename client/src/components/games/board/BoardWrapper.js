@@ -12,7 +12,7 @@ class BoardWrapper extends PureComponent {
         this.setState({down: true})
         if (!this.state.keysPressed.includes(e.key)) this.setState({...this.state, keysPressed: [...this.state.keysPressed, e.key]})
         setTimeout(() => {
-          this.props.onKeyDown(this.state.keysPressed, this.props.playerNumber, this.props.game)
+          this.props.onKeyDown(this.state.keysPressed, this.props.player, this.props.game)
           this.setState({...this.state, down: false})
         }, 150)
       },
@@ -62,7 +62,7 @@ class BoardWrapper extends PureComponent {
   render() {
     return (
       <Board
-        playerNumber={this.props.playerNumber}
+        player={this.props.player}
         coordinates_p1={this.props.coordinates_p1}
         coordinates_p2={this.props.coordinates_p2}
         beam_p1={this.getBeamCells(this.props.coordinates_p1, this.props.beam_p1)}

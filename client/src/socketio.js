@@ -10,7 +10,10 @@ export default class SocketIO {
     this.socket = io.connect(baseUrl, {
       query: `auth_token=${jwt}`
     });
-    this.socket.on('action', payload => dispatch(payload))
+    this.socket.on('action', payload => {
+      console.log(payload)
+      return  dispatch(payload)
+    })
     this.socket.on('syncGame', data=> {
       // console.log("SyncGame emission received")
        dispatch(syncGame(data))
