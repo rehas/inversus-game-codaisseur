@@ -28,36 +28,43 @@ class GamesList extends PureComponent {
       .filter(p => p.player === parseInt(game.winner))
       .map(p => p.userId)[0]
 
-    const winnerName = Object.keys(users).map(u=> u.id === parseInt(winnerId))
+    const winnerName = Object.keys(users)
+      .map(u => {if (users[u].id === winnerId) return users[u].username})
+      .filter(n => n !== undefined)[0]
 
     return (<div key={game.id} className="game-card">
       <div>
         <h2>Game #{game.id}</h2>
-          <div className={'game-card-pending'}>
-            <p>
-              This game is being played by: <br/>
+          <div>
+            <p>This game is being played by: <br/>
               {
                 game.players
                   .map(player => users[player.userId].username)
                   .join(' and ')
               }
             </p>
-        {game.status === 'pending' && (
-          <div>
-            <p>Status: Waiting for Player 2...</p>
-            {game.players.map(p => (p.userId === userId) ? <button onClick={()=> goToGame()} >Return to Game!</button> : <button onClick={() => joinGame()}>I'll be Player 2!</button>)}
-          </div>
-          )
-        }
-        {game.status === 'started' &&
-        <div>
-          <p>Status: In progress</p>
-          {game.players.map(p => (p.userId === userId) ? <button onClick={()=> goToGame()} >Return to Game!</button> : null)}
-        </div>
+          {
+            game.status === 'pending' && (
+            <div>
+              <p className={'status'}>Status: Waiting for Player 2...</p>
+              {game.players.map(p => (p.userId === userId) ? <button onClick={()=> goToGame()}>Return to Game!</button> : <button onClick={() => joinGame()}>I'll be Player 2!</button>)}
+            </div>
+            )
           }
-        {game.status === 'finished' && <p>Status: Finished <br/> Player {console.log(winnerName)} was the winner! </p>}
-
-
+          {
+            game.status === 'started' &&
+          <div>
+            <p className={'status'}>Status: In progress</p>
+            {game.players.map(p => (p.userId === userId) ? <button onClick={()=> goToGame()} >Return to Game!</button> : null)}
+          </div>
+            }
+          {
+            game.status === 'finished' &&
+            <p className={'status'}>Status: Finished
+              <br/>
+              <span className={'winner'}>{winnerName} was the winner! </span>
+            </p>
+          }
           </div>
       </div>
     </div>)

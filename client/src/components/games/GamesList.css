@@ -20,9 +20,15 @@
     border-radius: 1em;
     padding: 2em;
     margin-top: 1em; }
+    .game-list .game-card .winner {
+      color: #ffffff; }
+    .game-list .game-card .status {
+      color: #ffb000; }
     .game-list .game-cardh2 {
       margin-bottom: 1em;
       font-size: 1.5em; }
+    .game-list .game-card button {
+      margin-left: 70%; }
   .game-list .game-list-create-game-button {
     font-size: 2em;
     margin-top: 10px !important; }

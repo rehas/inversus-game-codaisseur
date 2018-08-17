@@ -108,7 +108,7 @@ class GameDetails extends Component {
       {
         game.status === 'finished' &&
         <div className={'GameDetail-div-result'}>
-          {parseInt(game.winner) === player.player ? <h1>You won!</h1> : <h1>You lost!</h1>}
+          {parseInt(game.winner) === player.player ? <h1>Game Over... Winner!</h1> : <h1>Game Over... Loser!</h1>}
         </div>
       }
     </div>)

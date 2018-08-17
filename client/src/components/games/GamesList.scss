@@ -19,16 +19,26 @@
     padding: 2em;
     margin-top: 1em;
 
+    .winner {
+      color: $white;
+    }
+
+    .status {
+      color: $orange;
+    }
+
     &h2 {
       margin-bottom: 1em;
       font-size: 1.5em;
     }
 
+    button {
+      margin-left: 70%;
+    }
   }
 
   .game-list-create-game-button {
     font-size: 2em;
     margin-top: 10px !important;
   }
-
 }

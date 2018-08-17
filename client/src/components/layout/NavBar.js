@@ -14,7 +14,7 @@ const NavBar = (props) => {
       <div className={'NavBar-Options'}>
         {
           user &&
-          <div className={'NavBar-Options-username'}> User: { user.username }</div>
+          <div className={'NavBar-Options-username'}> Hello, { user.username }</div>
         }
         {
           location.pathname.indexOf('login') > 0 &&

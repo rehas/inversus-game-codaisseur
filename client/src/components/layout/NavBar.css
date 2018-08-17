@@ -24,3 +24,5 @@
     display: flex;
     justify-content: space-between;
     align-items: center; }
+    #NavBar .NavBar-Options .NavBar-Options-username {
+      color: #ffb000; }
