@@ -7,6 +7,7 @@ import {beamFired} from '../../actions/beams'
 import {userId} from '../../jwt'
 import './GameDetails.css'
 import BoardWrapper from './board/BoardWrapper'
+import BoardListener from './board/BoardListener';
 
 class GameDetails extends PureComponent {
 
@@ -17,7 +18,7 @@ class GameDetails extends PureComponent {
     }
   }
 
-  joinGame = () => this.props.joinGame(this.props.game.id)
+  joinGame = () => this.props.joinGame(this.props.ID)
 
   // onKeyDown = (key, player, game) => {
   //   const lastKnownPlayerCoordinates = game[`coordinates_p${player}`]
@@ -110,11 +111,15 @@ class GameDetails extends PureComponent {
 
       {
         STATUS === 'started' &&
+        <div>
         <BoardWrapper
           playerNumber={player.player}
           
           // onKeyDown={this.onKeyDown}
-          /* game={game} *//>
+          /* game={game} */
+        />
+        <BoardListener game={this.props.game} id={this.props.ID} playerNumber={player.player}/>
+        </div>
       }
 
       { STATUS === 'finished' &&
@@ -126,9 +131,9 @@ class GameDetails extends PureComponent {
 const mapStateToProps = (state, props) => ({
   authenticated: state.currentUser !== null,
   userId: state.currentUser && userId(state.currentUser.jwt),
-  // game: state.games && state.games[props.match.params.id],
+  game: state.games && state.games[props.match.params.id],
   PLAYERS:  state.currentGame && state.currentGame.players,
-  ID :      state.currentGame && state.currentGame.id, 
+  ID :      state.games && state.games[props.match.params.id].id, 
   STATUS:   state.currentGame && state.currentGame.status,
   WINNER:   state.currentGame && state.currentGame.winner,
   users: state.users,

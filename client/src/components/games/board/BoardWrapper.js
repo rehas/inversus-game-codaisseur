@@ -25,90 +25,90 @@ class BoardWrapper extends Component {
   //   }
   // }
 
-  onKeyDown = (key, player, game) => {
-    const lastKnownPlayerCoordinates = game[`coordinates_p${player}`]
-    let updatedPlayerCoordinates = {...lastKnownPlayerCoordinates}
-    const p_num = `p${player}`
-    const otherPlayerCoordinates = player === 1 ? game.coordinates_p2 : game.coordinates_p1
-    const bumpPlayer = (updatedPlayerCoordinates) => updatedPlayerCoordinates.Y === otherPlayerCoordinates.Y && updatedPlayerCoordinates.X === otherPlayerCoordinates.X
-    const updatePosition = (coordinates, direction) => this.props.updatePosition(p_num, coordinates, game.id, direction)
-    switch (key) {
-      case 'ArrowLeft':
-        updatedPlayerCoordinates.X = lastKnownPlayerCoordinates.X -1 < 0 ? 15 : lastKnownPlayerCoordinates.X -1
-        if(bumpPlayer(updatedPlayerCoordinates)) return updatePosition(lastKnownPlayerCoordinates)
-        return updatePosition(updatedPlayerCoordinates)
-      case 'ArrowRight':
-        updatedPlayerCoordinates.X = lastKnownPlayerCoordinates.X + 1 > 15 ? 0 : lastKnownPlayerCoordinates.X +1
-        if(bumpPlayer(updatedPlayerCoordinates)) return updatePosition(lastKnownPlayerCoordinates)
-        return updatePosition(updatedPlayerCoordinates)
-      case 'ArrowUp':
-        updatedPlayerCoordinates.Y = lastKnownPlayerCoordinates.Y -1 < 0 ? 9 : lastKnownPlayerCoordinates.Y -1
-        if(bumpPlayer(updatedPlayerCoordinates)) return updatePosition(lastKnownPlayerCoordinates)
-        return updatePosition(updatedPlayerCoordinates)
-      case 'ArrowDown':
-        updatedPlayerCoordinates.Y = lastKnownPlayerCoordinates.Y +1 > 9 ? 0 :  lastKnownPlayerCoordinates.Y +1
-        if(bumpPlayer(updatedPlayerCoordinates)) return updatePosition(lastKnownPlayerCoordinates)
-        return updatePosition(updatedPlayerCoordinates)
-      case 'w':
-        console.log(player)
-        this.props.beamFired(game.id, lastKnownPlayerCoordinates, 'up', player)
-        return updatePosition(updatedPlayerCoordinates, 'up')
-      case 'a':
-        this.props.beamFired(game.id, lastKnownPlayerCoordinates, 'left', player)
-        return updatePosition(updatedPlayerCoordinates, 'left')
-      case 's':
-        this.props.beamFired(game.id, lastKnownPlayerCoordinates, 'down', player) 
-        return updatePosition(updatedPlayerCoordinates, 'down')
-      case 'd':
-        this.props.beamFired(game.id, lastKnownPlayerCoordinates, 'right', player)
-        return updatePosition(updatedPlayerCoordinates, 'right')
-      default:
-        return updatedPlayerCoordinates
-    }
-  }
+  // onKeyDown = (key, player, game) => {
+  //   const lastKnownPlayerCoordinates = game[`coordinates_p${player}`]
+  //   let updatedPlayerCoordinates = {...lastKnownPlayerCoordinates}
+  //   const p_num = `p${player}`
+  //   const otherPlayerCoordinates = player === 1 ? game.coordinates_p2 : game.coordinates_p1
+  //   const bumpPlayer = (updatedPlayerCoordinates) => updatedPlayerCoordinates.Y === otherPlayerCoordinates.Y && updatedPlayerCoordinates.X === otherPlayerCoordinates.X
+  //   const updatePosition = (coordinates, direction) => this.props.updatePosition(p_num, coordinates, game.id, direction)
+  //   switch (key) {
+  //     case 'ArrowLeft':
+  //       updatedPlayerCoordinates.X = lastKnownPlayerCoordinates.X -1 < 0 ? 15 : lastKnownPlayerCoordinates.X -1
+  //       if(bumpPlayer(updatedPlayerCoordinates)) return updatePosition(lastKnownPlayerCoordinates)
+  //       return updatePosition(updatedPlayerCoordinates)
+  //     case 'ArrowRight':
+  //       updatedPlayerCoordinates.X = lastKnownPlayerCoordinates.X + 1 > 15 ? 0 : lastKnownPlayerCoordinates.X +1
+  //       if(bumpPlayer(updatedPlayerCoordinates)) return updatePosition(lastKnownPlayerCoordinates)
+  //       return updatePosition(updatedPlayerCoordinates)
+  //     case 'ArrowUp':
+  //       updatedPlayerCoordinates.Y = lastKnownPlayerCoordinates.Y -1 < 0 ? 9 : lastKnownPlayerCoordinates.Y -1
+  //       if(bumpPlayer(updatedPlayerCoordinates)) return updatePosition(lastKnownPlayerCoordinates)
+  //       return updatePosition(updatedPlayerCoordinates)
+  //     case 'ArrowDown':
+  //       updatedPlayerCoordinates.Y = lastKnownPlayerCoordinates.Y +1 > 9 ? 0 :  lastKnownPlayerCoordinates.Y +1
+  //       if(bumpPlayer(updatedPlayerCoordinates)) return updatePosition(lastKnownPlayerCoordinates)
+  //       return updatePosition(updatedPlayerCoordinates)
+  //     case 'w':
+  //       console.log(player)
+  //       this.props.beamFired(game.id, lastKnownPlayerCoordinates, 'up', player)
+  //       return updatePosition(updatedPlayerCoordinates, 'up')
+  //     case 'a':
+  //       this.props.beamFired(game.id, lastKnownPlayerCoordinates, 'left', player)
+  //       return updatePosition(updatedPlayerCoordinates, 'left')
+  //     case 's':
+  //       this.props.beamFired(game.id, lastKnownPlayerCoordinates, 'down', player) 
+  //       return updatePosition(updatedPlayerCoordinates, 'down')
+  //     case 'd':
+  //       this.props.beamFired(game.id, lastKnownPlayerCoordinates, 'right', player)
+  //       return updatePosition(updatedPlayerCoordinates, 'right')
+  //     default:
+  //       return updatedPlayerCoordinates
+  //   }
+  // }
 
-  shouldComponentUpdate(){
-    return false
-  }
+  // shouldComponentUpdate(){
+  //   return false
+  // }
 
 
 
-  componentDidMount() {
-    document.addEventListener('keydown', (e) => {this.onKeyDown(e.key, this.props.playerNumber, this.props.currentGame)}, false)
-    // document.addEventListener('keyup', () => {this.setState({down: false})}, false)
-  }
-  componentWillUnmount() {
-    document.removeEventListener('keydown', (e) => {this.onKeyDown(e.key, this.props.playerNumber, this.props.currentGame)}, false)
-    // document.removeEventListener('keyup', () => {this.setState({down: false})}, false)
-  }
+  // componentDidMount() {
+  //   document.addEventListener('keydown', (e) => {this.onKeyDown(e.key, this.props.playerNumber, this.props.currentGame)}, false)
+  //   // document.addEventListener('keyup', () => {this.setState({down: false})}, false)
+  // }
+  // componentWillUnmount() {
+  //   document.removeEventListener('keydown', (e) => {this.onKeyDown(e.key, this.props.playerNumber, this.props.currentGame)}, false)
+  //   // document.removeEventListener('keyup', () => {this.setState({down: false})}, false)
+  // }
 
-  getBeamCells  (playerCoordinates, beamDirection)  {
-    const beamArray = []
-    switch (beamDirection) {
-      case 'left':
-        for (let i=0; i < playerCoordinates.X; i++){
-           beamArray.push({X: i, Y: playerCoordinates.Y})
-        }
-        return {beamArray: beamArray, direction: 'left'}
-      case 'right':
-        for (let i=15; i > playerCoordinates.X; i--){
-          beamArray.push({X: i, Y: playerCoordinates.Y})
-        }
-        return {beamArray: beamArray, direction: 'right'}
-      case 'up':
-        for (let i=0; i < playerCoordinates.Y; i++){
-          beamArray.push({X: playerCoordinates.X, Y: i})
-        }
-        return {beamArray: beamArray, direction: 'up'}
-      case 'down':
-        for (let i=9; i > playerCoordinates.Y; i--){
-          beamArray.push({X: playerCoordinates.X, Y: i})
-        }
-        return {beamArray: beamArray, direction: 'down'}
-      default:
-        return {beamArray: beamArray, direction: 'none'}
-    }
-  }
+  // getBeamCells  (playerCoordinates, beamDirection)  {
+  //   const beamArray = []
+  //   switch (beamDirection) {
+  //     case 'left':
+  //       for (let i=0; i < playerCoordinates.X; i++){
+  //          beamArray.push({X: i, Y: playerCoordinates.Y})
+  //       }
+  //       return {beamArray: beamArray, direction: 'left'}
+  //     case 'right':
+  //       for (let i=15; i > playerCoordinates.X; i--){
+  //         beamArray.push({X: i, Y: playerCoordinates.Y})
+  //       }
+  //       return {beamArray: beamArray, direction: 'right'}
+  //     case 'up':
+  //       for (let i=0; i < playerCoordinates.Y; i++){
+  //         beamArray.push({X: playerCoordinates.X, Y: i})
+  //       }
+  //       return {beamArray: beamArray, direction: 'up'}
+  //     case 'down':
+  //       for (let i=9; i > playerCoordinates.Y; i--){
+  //         beamArray.push({X: playerCoordinates.X, Y: i})
+  //       }
+  //       return {beamArray: beamArray, direction: 'down'}
+  //     default:
+  //       return {beamArray: beamArray, direction: 'none'}
+  //   }
+  // }
 
   render() {
     return (
@@ -119,19 +119,19 @@ class BoardWrapper extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  // console.log(state)
-  return {
-     currentGame : state.currentGame,
-  } 
+// const mapStateToProps = (state) => {
+//   // console.log(state)
+//   return {
+//      currentGame : state.currentGame,
+//   } 
 
-}
+// }
 
-const mapDispatchToProps = {
-  getGames, getUsers, joinGame, syncGame, updatePosition, beamFired
-}
+// const mapDispatchToProps = {
+//   getGames, getUsers, joinGame, syncGame, updatePosition, beamFired
+// }
 
-export default connect(mapStateToProps, mapDispatchToProps)(BoardWrapper)
+export default connect(null, null)(BoardWrapper)
 
 /* 
 coordinates_p1={this.props.coordinates_p1}
